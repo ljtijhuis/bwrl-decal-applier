@@ -5,8 +5,9 @@ import type { ApiConfig } from '../types/config';
 
 const mockConfig: ApiConfig = {
   carModels: {
-    'ferrari-296-gt3': { label: 'Ferrari 296 GT3', hasClassDecals: true },
-    'porsche-911-gt3-r': { label: 'Porsche 911 GT3 R', hasClassDecals: false },
+    'ferrari-296-gt3-sprint': { label: 'Ferrari 296 GT3', group: 'GT3 Sprint', hasClassDecals: true },
+    'porsche-992-gt3r-bwec': { label: 'Porsche 992 GT3 R', group: 'BWEC', hasClassDecals: false },
+    'bmw-m4-gt3-bwec': { label: 'BMW M4 GT3', group: 'BWEC', hasClassDecals: false },
   },
 };
 
@@ -31,7 +32,7 @@ describe('CarModelSelect', () => {
     );
 
     expect(screen.getByRole('option', { name: 'Ferrari 296 GT3' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Porsche 911 GT3 R' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Porsche 992 GT3 R' })).toBeInTheDocument();
   });
 
   it('calls onChange with the selected car model id', async () => {
@@ -43,7 +44,7 @@ describe('CarModelSelect', () => {
       screen.getByRole('option', { name: 'Ferrari 296 GT3' })
     );
 
-    expect(onChange).toHaveBeenCalledWith('ferrari-296-gt3');
+    expect(onChange).toHaveBeenCalledWith('ferrari-296-gt3-sprint');
   });
 
   it('shows the currently selected value', () => {
@@ -51,12 +52,32 @@ describe('CarModelSelect', () => {
       <CarModelSelect
         config={mockConfig}
         loading={false}
-        value="porsche-911-gt3-r"
+        value="porsche-992-gt3r-bwec"
         onChange={vi.fn()}
       />
     );
 
     const select = screen.getByRole('combobox') as HTMLSelectElement;
-    expect(select.value).toBe('porsche-911-gt3-r');
+    expect(select.value).toBe('porsche-992-gt3r-bwec');
+  });
+
+  it('renders an optgroup for each distinct series group', () => {
+    render(<CarModelSelect config={mockConfig} loading={false} value="" onChange={vi.fn()} />);
+
+    const groups = document.querySelectorAll('optgroup');
+    expect(groups).toHaveLength(2);
+    expect(groups[0]).toHaveAttribute('label', 'GT3 Sprint');
+    expect(groups[1]).toHaveAttribute('label', 'BWEC');
+  });
+
+  it('places cars inside their correct optgroup', () => {
+    render(<CarModelSelect config={mockConfig} loading={false} value="" onChange={vi.fn()} />);
+
+    const bwecGroup = document.querySelector('optgroup[label="BWEC"]');
+    expect(bwecGroup).not.toBeNull();
+    const options = bwecGroup!.querySelectorAll('option');
+    expect(options).toHaveLength(2);
+    expect(options[0]).toHaveValue('porsche-992-gt3r-bwec');
+    expect(options[1]).toHaveValue('bmw-m4-gt3-bwec');
   });
 });

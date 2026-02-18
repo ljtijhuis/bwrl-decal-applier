@@ -39,7 +39,7 @@ Express (backend)
 Built with Vite, React, and TypeScript.
 
 - **Upload form** — drag-and-drop or file picker; validates type (PNG/TGA) and size (≤ 20 MB) on the client before submission
-- **Car model selector** — dropdown populated from `decals/config.json` at app startup (or bundled at build time)
+- **Car model selector** — dropdown grouped by series (`GT3 Sprint`, `BWEC`, `Falken`) using `<optgroup>` elements, populated from `/api/config` at app startup
 - **Driver class selector** — shown only when the selected car model has class-specific decals
 - **Apply button** — POSTs to `/api/apply`, then triggers a browser download of the returned PNG *(Phase 2)*
 - **Preview** — shows a thumbnail of the uploaded livery before submission and the composited result after *(Phase 4)*
@@ -51,7 +51,7 @@ Built with Node.js, Express, and TypeScript.
 | Route | Purpose |
 |-------|---------|
 | `GET /health` | Liveness check — returns `{ status: "ok", timestamp }` |
-| `GET /api/config` | Returns `{ carModels: { [id]: { label, hasClassDecals } } }` |
+| `GET /api/config` | Returns `{ carModels: { [id]: { label, group, hasClassDecals } } }` |
 | `POST /api/apply` | Accepts livery upload, returns composited PNG *(Phase 2)* |
 
 **Image compositing** uses Sharp:
@@ -70,21 +70,22 @@ Static PNG files checked into the repository alongside a JSON configuration file
   "carModels": {
     "<car-id>": {
       "label": "Human-readable name shown in the UI",
+      "group": "Series name used to group cars in the dropdown (GT3 Sprint | BWEC | Falken)",
       "decals": {
         "base": [
           {
-            "file": "relative path to PNG inside decals/",
+            "file": "relative path to PNG inside decals/ (lowercase-with-dashes)",
             "x": 0,
             "y": 0,
-            "width": 150,
-            "height": 80
+            "width": 2048,
+            "height": 2048
           }
         ],
         "classSpecific": {
-          "AM":     [{ "file": "class-am.png",    "x": 50, "y": 50, "width": 60, "height": 60 }],
-          "PRO-AM": [{ "file": "class-proam.png", "x": 50, "y": 50, "width": 60, "height": 60 }],
-          "PRO":    [{ "file": "class-pro.png",   "x": 50, "y": 50, "width": 60, "height": 60 }],
-          "ROOKIE": [{ "file": "class-rookie.png","x": 50, "y": 50, "width": 60, "height": 60 }]
+          "AM":     [{ "file": "gt3-am/<car-name>.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/<car-name>.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/<car-name>.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/<car-name>.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
         }
       }
     }
@@ -92,7 +93,23 @@ Static PNG files checked into the repository alongside a JSON configuration file
 }
 ```
 
-Cars that don't use class badges omit the `classSpecific` key entirely.
+All decal PNGs are **2048×2048 full-canvas overlays** — the same dimensions as a standard iRacing livery. Placement is always `x: 0, y: 0, width: 2048, height: 2048`. Cars that don't use class badges omit the `classSpecific` key entirely. GT3 Sprint cars use only `classSpecific` entries and set `"base": []`.
+
+**Decal asset directories** (all lowercase-with-dashes):
+
+| Directory | Contents |
+|-----------|----------|
+| `bwec-gt3/` | Base overlays for BWEC GT3 cars (11 cars) |
+| `bwec-gtp/` | Base overlays for BWEC GTP cars (5 cars) |
+| `gt3-am/` | AM class badges for GT3 Sprint (11 cars) |
+| `gt3-proam/` | PRO-AM class badges for GT3 Sprint (11 cars) |
+| `gt3-pro/` | PRO class badges for GT3 Sprint (11 cars) |
+| `gt3-rookie/` | Rookie class badges for GT3 Sprint (11 cars) |
+| `falken-gt4/` | Base overlays for Falken GT4 cars (6 cars) |
+| `falken-lmp3/` | Base overlay for Falken LMP3 car (1 car) |
+| `example/` | Tiny placeholder PNGs used in compositor unit tests |
+
+Files within each directory are named `{car-name}.png` in kebab-case (e.g. `ferrari-296-gt3.png`), without series or class suffixes — the directory provides that context.
 
 ## Technology choices
 

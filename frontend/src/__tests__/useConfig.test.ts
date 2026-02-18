@@ -4,8 +4,8 @@ import type { ApiConfig } from '../types/config';
 
 const mockConfig: ApiConfig = {
   carModels: {
-    'ferrari-296-gt3': { label: 'Ferrari 296 GT3', hasClassDecals: true },
-    'porsche-911-gt3-r': { label: 'Porsche 911 GT3 R', hasClassDecals: false },
+    'ferrari-296-gt3-sprint': { label: 'Ferrari 296 GT3', group: 'GT3 Sprint', hasClassDecals: true },
+    'porsche-992-gt3r-bwec': { label: 'Porsche 992 GT3 R', group: 'BWEC', hasClassDecals: false },
   },
 };
 

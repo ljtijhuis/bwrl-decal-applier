@@ -1,4 +1,4 @@
-import type { ApiConfig } from '../types/config';
+import type { ApiCarModel, ApiConfig } from '../types/config';
 
 interface CarModelSelectProps {
   config: ApiConfig | null;
@@ -24,11 +24,26 @@ export function CarModelSelect({ config, loading, value, onChange }: CarModelSel
       >
         <option value="">{loading ? 'Loading…' : '— Select a car model —'}</option>
         {config &&
-          Object.entries(config.carModels).map(([id, car]) => (
-            <option key={id} value={id}>
-              {car.label}
-            </option>
-          ))}
+          (() => {
+            const groupOrder: string[] = [];
+            const grouped: Record<string, Array<[string, ApiCarModel]>> = {};
+            for (const [id, car] of Object.entries(config.carModels)) {
+              if (!grouped[car.group]) {
+                groupOrder.push(car.group);
+                grouped[car.group] = [];
+              }
+              grouped[car.group].push([id, car]);
+            }
+            return groupOrder.map((groupName) => (
+              <optgroup key={groupName} label={groupName}>
+                {grouped[groupName].map(([id, car]) => (
+                  <option key={id} value={id}>
+                    {car.label}
+                  </option>
+                ))}
+              </optgroup>
+            ));
+          })()}
       </select>
     </div>
   );

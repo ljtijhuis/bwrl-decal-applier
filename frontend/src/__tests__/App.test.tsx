@@ -5,8 +5,8 @@ import type { ApiConfig } from '../types/config';
 
 const configWithClass: ApiConfig = {
   carModels: {
-    'ferrari-296-gt3': { label: 'Ferrari 296 GT3', hasClassDecals: true },
-    'porsche-911-gt3-r': { label: 'Porsche 911 GT3 R', hasClassDecals: false },
+    'ferrari-296-gt3-sprint': { label: 'Ferrari 296 GT3', group: 'GT3 Sprint', hasClassDecals: true },
+    'porsche-992-gt3r-bwec': { label: 'Porsche 992 GT3 R', group: 'BWEC', hasClassDecals: false },
   },
 };
 
@@ -59,7 +59,7 @@ describe('App', () => {
   it('Apply button enabled for car without class decals once file is selected', async () => {
     render(<App />);
     await waitFor(() =>
-      expect(screen.getByRole('option', { name: 'Porsche 911 GT3 R' })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: 'Porsche 992 GT3 R' })).toBeInTheDocument()
     );
 
     const input = screen.getByTestId('file-input');
@@ -67,7 +67,7 @@ describe('App', () => {
 
     await userEvent.selectOptions(
       screen.getByLabelText(/car model/i),
-      screen.getByRole('option', { name: 'Porsche 911 GT3 R' })
+      screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
     expect(screen.getByRole('button', { name: /apply decals/i })).toBeEnabled();
@@ -133,7 +133,7 @@ describe('App', () => {
     // Switch to Porsche — driver class selector should disappear
     await userEvent.selectOptions(
       screen.getByLabelText(/car model/i),
-      screen.getByRole('option', { name: 'Porsche 911 GT3 R' })
+      screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
     expect(screen.queryByLabelText(/driver class/i)).not.toBeInTheDocument();
@@ -155,14 +155,14 @@ describe('App', () => {
 
     render(<App />);
     await waitFor(() =>
-      expect(screen.getByRole('option', { name: 'Porsche 911 GT3 R' })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: 'Porsche 992 GT3 R' })).toBeInTheDocument()
     );
 
     const input = screen.getByTestId('file-input');
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
     await userEvent.selectOptions(
       screen.getByLabelText(/car model/i),
-      screen.getByRole('option', { name: 'Porsche 911 GT3 R' })
+      screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
     fireEvent.submit(document.querySelector('form')!);
@@ -186,14 +186,14 @@ describe('App', () => {
 
     render(<App />);
     await waitFor(() =>
-      expect(screen.getByRole('option', { name: 'Porsche 911 GT3 R' })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: 'Porsche 992 GT3 R' })).toBeInTheDocument()
     );
 
     const input = screen.getByTestId('file-input');
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
     await userEvent.selectOptions(
       screen.getByLabelText(/car model/i),
-      screen.getByRole('option', { name: 'Porsche 911 GT3 R' })
+      screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
     fireEvent.submit(document.querySelector('form')!);

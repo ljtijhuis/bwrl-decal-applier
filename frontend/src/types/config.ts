@@ -23,6 +23,7 @@ export interface DecalConfig {
 /** Simplified shape returned by GET /api/config */
 export interface ApiCarModel {
   label: string;
+  group: string;
   hasClassDecals: boolean;
 }
 

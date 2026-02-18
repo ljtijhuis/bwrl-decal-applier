@@ -8,6 +8,7 @@ const DECALS_DIR = join(__dirname, '../../../decals');
 
 describe('applyDecals', () => {
   let liveryBuffer: Buffer;
+  let tgaBuffer: Buffer;
 
   beforeAll(async () => {
     liveryBuffer = await sharp({
@@ -20,6 +21,17 @@ describe('applyDecals', () => {
     })
       .png()
       .toBuffer();
+
+    // Build a minimal valid 2x2 TGA (type 2, 32bpp, top-to-bottom)
+    const w = 2, h = 2;
+    const header = Buffer.alloc(18, 0);
+    header[2] = 2;                    // uncompressed true-color
+    header.writeUInt16LE(w, 12);
+    header.writeUInt16LE(h, 14);
+    header[16] = 32;                  // 32 bpp
+    header[17] = 0x28;                // top-left origin, 8-bit alpha
+    const pixels = Buffer.alloc(w * h * 4, 128); // BGRA gray pixels
+    tgaBuffer = Buffer.concat([header, pixels]);
   });
 
   it('returns a Buffer', async () => {
@@ -48,6 +60,12 @@ describe('applyDecals', () => {
     ];
     const result = await applyDecals(liveryBuffer, entries, DECALS_DIR);
     expect(Buffer.isBuffer(result)).toBe(true);
+  });
+
+  it('accepts a TGA livery and returns a valid PNG', async () => {
+    const result = await applyDecals(tgaBuffer, [], DECALS_DIR);
+    const meta = await sharp(result).metadata();
+    expect(meta.format).toBe('png');
   });
 
   it('rejects for an invalid livery buffer', async () => {

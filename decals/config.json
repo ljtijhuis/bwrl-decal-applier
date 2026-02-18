@@ -1,43 +1,307 @@
 {
   "carModels": {
-    "ferrari-296-gt3": {
-      "label": "Ferrari 296 GT3",
+    "acura-nsx-gt3-evo-sprint": {
+      "label": "Acura NSX GT3 Evo",
+      "group": "GT3 Sprint",
       "decals": {
-        "base": [
-          {
-            "file": "example/league-logo.png",
-            "x": 100,
-            "y": 200,
-            "width": 150,
-            "height": 80
-          }
-        ],
+        "base": [],
         "classSpecific": {
-          "AM": [{ "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }],
-          "PRO-AM": [
-            { "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }
-          ],
-          "PRO": [
-            { "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }
-          ],
-          "ROOKIE": [
-            { "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }
-          ]
+          "AM":     [{ "file": "gt3-am/acura-nsx-gt3-evo.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/acura-nsx-gt3-evo.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/acura-nsx-gt3-evo.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/acura-nsx-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
         }
       }
     },
-    "porsche-911-gt3-r": {
-      "label": "Porsche 911 GT3 R",
+    "aston-martin-vantage-gt3-evo-sprint": {
+      "label": "Aston Martin Vantage GT3 Evo",
+      "group": "GT3 Sprint",
       "decals": {
-        "base": [
-          {
-            "file": "example/league-logo.png",
-            "x": 120,
-            "y": 180,
-            "width": 150,
-            "height": 80
-          }
-        ]
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/aston-martin-vantage-gt3-evo.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/aston-martin-vantage-gt3-evo.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/aston-martin-vantage-gt3-evo.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/aston-martin-vantage-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "audi-r8-lms-gt3-evo-sprint": {
+      "label": "Audi R8 LMS GT3 Evo",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/audi-r8-lms-gt3-evo.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/audi-r8-lms-gt3-evo.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/audi-r8-lms-gt3-evo.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/audi-r8-lms-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "bmw-m4-gt3-sprint": {
+      "label": "BMW M4 GT3",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/bmw-m4-gt3.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/bmw-m4-gt3.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/bmw-m4-gt3.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/bmw-m4-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "corvette-z06-gt3r-sprint": {
+      "label": "Corvette Z06 GT3.R",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/corvette-z06-gt3r.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/corvette-z06-gt3r.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/corvette-z06-gt3r.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/corvette-z06-gt3r.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "ferrari-296-gt3-sprint": {
+      "label": "Ferrari 296 GT3",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/ferrari-296-gt3.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/ferrari-296-gt3.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/ferrari-296-gt3.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/ferrari-296-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "lamborghini-huracan-gt3-evo-sprint": {
+      "label": "Lamborghini Huracán GT3 Evo",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/lamborghini-huracan-gt3-evo.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/lamborghini-huracan-gt3-evo.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/lamborghini-huracan-gt3-evo.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/lamborghini-huracan-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "mclaren-720s-gt3-sprint": {
+      "label": "McLaren 720S GT3",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/mclaren-720s-gt3.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/mclaren-720s-gt3.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/mclaren-720s-gt3.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/mclaren-720s-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "mercedes-amg-gt3-evo-sprint": {
+      "label": "Mercedes-AMG GT3 Evo",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/mercedes-amg-gt3-evo.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/mercedes-amg-gt3-evo.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/mercedes-amg-gt3-evo.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/mercedes-amg-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "ford-mustang-gt3-sprint": {
+      "label": "Ford Mustang GT3",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/ford-mustang-gt3.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/ford-mustang-gt3.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/ford-mustang-gt3.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/ford-mustang-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "porsche-992-gt3r-sprint": {
+      "label": "Porsche 992 GT3 R",
+      "group": "GT3 Sprint",
+      "decals": {
+        "base": [],
+        "classSpecific": {
+          "AM":     [{ "file": "gt3-am/porsche-992-gt3r.png",     "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO-AM": [{ "file": "gt3-proam/porsche-992-gt3r.png",  "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "PRO":    [{ "file": "gt3-pro/porsche-992-gt3r.png",    "x": 0, "y": 0, "width": 2048, "height": 2048 }],
+          "ROOKIE": [{ "file": "gt3-rookie/porsche-992-gt3r.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+        }
+      }
+    },
+    "acura-nsx-gt3-evo-bwec": {
+      "label": "Acura NSX GT3 Evo",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/acura-nsx-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "aston-martin-vantage-gt3-evo-bwec": {
+      "label": "Aston Martin Vantage GT3 Evo",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/aston-martin-vantage-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "audi-r8-lms-gt3-evo-bwec": {
+      "label": "Audi R8 LMS GT3 Evo",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/audi-r8-lms-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "bmw-m4-gt3-bwec": {
+      "label": "BMW M4 GT3",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/bmw-m4-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "corvette-z06-gt3r-bwec": {
+      "label": "Corvette Z06 GT3.R",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/corvette-z06-gt3r.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "ferrari-296-gt3-bwec": {
+      "label": "Ferrari 296 GT3",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/ferrari-296-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "lamborghini-huracan-gt3-evo-bwec": {
+      "label": "Lamborghini Huracán GT3 Evo",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/lamborghini-huracan-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "mclaren-720s-gt3-bwec": {
+      "label": "McLaren 720S GT3",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/mclaren-720s-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "mercedes-amg-gt3-evo-bwec": {
+      "label": "Mercedes-AMG GT3 Evo",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/mercedes-amg-gt3-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "ford-mustang-gt3-bwec": {
+      "label": "Ford Mustang GT3",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/ford-mustang-gt3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "porsche-992-gt3r-bwec": {
+      "label": "Porsche 992 GT3 R",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gt3/porsche-992-gt3r.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "acura-arx-06-gtp": {
+      "label": "Acura ARX-06 GTP",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gtp/acura-arx-06-gtp.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "bmw-m-hybrid-v8-gtp": {
+      "label": "BMW M Hybrid V8 GTP",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gtp/bmw-m-hybrid-v8-gtp.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "cadillac-v-series-r-gtp": {
+      "label": "Cadillac V-Series.R GTP",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gtp/cadillac-v-series-r-gtp.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "ferrari-499p": {
+      "label": "Ferrari 499P",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gtp/ferrari-499p.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "porsche-963-gtp": {
+      "label": "Porsche 963 GTP",
+      "group": "BWEC",
+      "decals": {
+        "base": [{ "file": "bwec-gtp/porsche-963-gtp.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "aston-martin-gt4-falken": {
+      "label": "Aston Martin Vantage GT4",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-gt4/aston-martin-vantage-gt4.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "bmw-m4-g82-gt4-evo-falken": {
+      "label": "BMW M4 G82 GT4 Evo",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-gt4/bmw-m4-g82-gt4-evo.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "ford-mustang-gt4-falken": {
+      "label": "Ford Mustang GT4",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-gt4/ford-mustang-gt4.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "mclaren-570s-gt4-falken": {
+      "label": "McLaren 570S GT4",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-gt4/mclaren-570s-gt4.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "mercedes-amg-gt4-falken": {
+      "label": "Mercedes-AMG GT4",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-gt4/mercedes-amg-gt4.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "porsche-718-cayman-gt4-falken": {
+      "label": "Porsche 718 Cayman GT4",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-gt4/porsche-718-cayman-gt4.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+      }
+    },
+    "lmp3-falken": {
+      "label": "LMP3",
+      "group": "Falken",
+      "decals": {
+        "base": [{ "file": "falken-lmp3/lmp3.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
       }
     }
   }

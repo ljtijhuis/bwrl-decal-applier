@@ -112,10 +112,20 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for a full walkthrough of how the pieces 
 
 ## Adding a new car model
 
-1. Add the decal PNG file(s) to `decals/`
-2. Add an entry to `decals/config.json` following the existing schema (see [ARCHITECTURE.md](ARCHITECTURE.md))
-3. Write an integration test that runs a real compositing call for the new car model
-4. Open a pull request — no UI code changes are needed; the car appears automatically
+1. **Add the decal PNG file(s)** to the appropriate subdirectory under `decals/`, using the naming convention `{car-name}.png` in kebab-case (e.g. `bwec-gt3/audi-r8-lms-gt3-evo.png`). All decals must be 2048×2048 RGBA PNG files.
+
+2. **Add an entry to `decals/config.json`** following the existing schema (see [ARCHITECTURE.md](ARCHITECTURE.md)):
+   - Choose a kebab-case `id`. If the same car appears in multiple series, include a series suffix (e.g. `ferrari-296-gt3-sprint`, `ferrari-296-gt3-bwec`).
+   - Set `"group"` to one of the existing series values (`"GT3 Sprint"`, `"BWEC"`, `"Falken"`). To add an entirely new series, introduce a new group string — the UI renders it automatically as a new `<optgroup>`.
+   - For **GT3 Sprint cars**: set `"base": []` and populate all four `classSpecific` classes (AM, PRO-AM, PRO, ROOKIE), each pointing to the file in the corresponding class directory.
+   - For **all other cars**: populate `"base"` with the single decal entry and omit `classSpecific`.
+   - All decal placements use `"x": 0, "y": 0, "width": 2048, "height": 2048`.
+
+3. **Add a test entry** in the appropriate `test.each` table in `backend/src/__tests__/apply.test.ts`:
+   - Cars without class decals → add `['your-car-id']` to the `nonClassDecalCars` array.
+   - GT3 Sprint cars → add `['your-car-id']` to the `classDecalCars` array.
+
+4. **Open a pull request** — no UI component changes are needed; the car appears automatically in the correct dropdown group.
 
 ## Submitting changes
 

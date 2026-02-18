@@ -16,6 +16,7 @@ interface DecalEntry {
 
 interface CarModelConfig {
   label: string;
+  group: string;
   decals: {
     base: DecalEntry[];
     classSpecific?: Record<string, DecalEntry[]>;
@@ -33,10 +34,11 @@ configRouter.get('/', async (_req, res) => {
     const raw = await readFile(DECALS_CONFIG_PATH, 'utf-8');
     const config = JSON.parse(raw) as DecalConfig;
 
-    const carModels: Record<string, { label: string; hasClassDecals: boolean }> = {};
+    const carModels: Record<string, { label: string; group: string; hasClassDecals: boolean }> = {};
     for (const [id, car] of Object.entries(config.carModels)) {
       carModels[id] = {
         label: car.label,
+        group: car.group,
         hasClassDecals:
           car.decals.classSpecific !== undefined &&
           Object.keys(car.decals.classSpecific).length > 0,

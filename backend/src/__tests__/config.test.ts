@@ -9,27 +9,45 @@ describe('GET /api/config', () => {
     expect(typeof res.body.carModels).toBe('object');
   });
 
-  it('includes ferrari-296-gt3 with hasClassDecals: true', async () => {
+  it('includes ferrari-296-gt3-sprint with hasClassDecals: true and group GT3 Sprint', async () => {
     const res = await request(app).get('/api/config');
-    expect(res.body.carModels['ferrari-296-gt3']).toBeDefined();
-    expect(res.body.carModels['ferrari-296-gt3'].label).toBe('Ferrari 296 GT3');
-    expect(res.body.carModels['ferrari-296-gt3'].hasClassDecals).toBe(true);
+    const car = res.body.carModels['ferrari-296-gt3-sprint'];
+    expect(car).toBeDefined();
+    expect(car.label).toBe('Ferrari 296 GT3');
+    expect(car.hasClassDecals).toBe(true);
+    expect(car.group).toBe('GT3 Sprint');
   });
 
-  it('includes porsche-911-gt3-r with hasClassDecals: false', async () => {
+  it('includes ferrari-296-gt3-bwec with hasClassDecals: false and group BWEC', async () => {
     const res = await request(app).get('/api/config');
-    expect(res.body.carModels['porsche-911-gt3-r']).toBeDefined();
-    expect(res.body.carModels['porsche-911-gt3-r'].label).toBe('Porsche 911 GT3 R');
-    expect(res.body.carModels['porsche-911-gt3-r'].hasClassDecals).toBe(false);
+    const car = res.body.carModels['ferrari-296-gt3-bwec'];
+    expect(car).toBeDefined();
+    expect(car.label).toBe('Ferrari 296 GT3');
+    expect(car.hasClassDecals).toBe(false);
+    expect(car.group).toBe('BWEC');
   });
 
-  it('each car model has label (string) and hasClassDecals (boolean)', async () => {
+  it('each car model has label (string), group (string), and hasClassDecals (boolean)', async () => {
     const res = await request(app).get('/api/config');
     for (const car of Object.values(res.body.carModels as Record<string, unknown>)) {
       expect(car).toMatchObject({
         label: expect.any(String),
+        group: expect.any(String),
         hasClassDecals: expect.any(Boolean),
       });
     }
+  });
+
+  it('returns all 34 car models', async () => {
+    const res = await request(app).get('/api/config');
+    expect(Object.keys(res.body.carModels)).toHaveLength(34);
+  });
+
+  it('contains exactly three series groups: GT3 Sprint, BWEC, and Falken', async () => {
+    const res = await request(app).get('/api/config');
+    const groups = new Set(
+      Object.values(res.body.carModels as Record<string, { group: string }>).map((c) => c.group)
+    );
+    expect(groups).toEqual(new Set(['GT3 Sprint', 'BWEC', 'Falken']));
   });
 });
