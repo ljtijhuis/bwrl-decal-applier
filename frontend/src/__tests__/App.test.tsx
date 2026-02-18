@@ -27,6 +27,7 @@ describe('App', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it('renders the page heading', async () => {
@@ -138,7 +139,20 @@ describe('App', () => {
     expect(screen.queryByLabelText(/driver class/i)).not.toBeInTheDocument();
   });
 
-  it('form submit handler does not throw (Phase 2 placeholder)', async () => {
+  it('triggers download when form is submitted successfully', async () => {
+    const mockBlob = new Blob(['png-data'], { type: 'image/png' });
+    const mockCreateObjectURL = vi.fn(() => 'blob:mock');
+    const mockRevokeObjectURL = vi.fn();
+
+    vi.unstubAllGlobals();
+    vi.stubGlobal('URL', { createObjectURL: mockCreateObjectURL, revokeObjectURL: mockRevokeObjectURL });
+    vi.stubGlobal(
+      'fetch',
+      vi.fn()
+        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(configWithClass) } as Response)
+        .mockResolvedValueOnce({ ok: true, blob: () => Promise.resolve(mockBlob) } as Response)
+    );
+
     render(<App />);
     await waitFor(() =>
       expect(screen.getByRole('option', { name: 'Porsche 911 GT3 R' })).toBeInTheDocument()
@@ -151,11 +165,42 @@ describe('App', () => {
       screen.getByRole('option', { name: 'Porsche 911 GT3 R' })
     );
 
-    const form = document.querySelector('form')!;
-    fireEvent.submit(form);
+    fireEvent.submit(document.querySelector('form')!);
 
-    // Form submission is a no-op in Phase 1; just verify no errors are thrown
-    expect(screen.getByRole('button', { name: /apply decals/i })).toBeEnabled();
+    await waitFor(() => expect(mockCreateObjectURL).toHaveBeenCalledWith(mockBlob));
+    expect(mockRevokeObjectURL).toHaveBeenCalledWith('blob:mock');
+  });
+
+  it('shows apply error banner on API failure', async () => {
+    vi.unstubAllGlobals();
+    vi.stubGlobal(
+      'fetch',
+      vi.fn()
+        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(configWithClass) } as Response)
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 400,
+          json: () => Promise.resolve({ error: 'Unknown car model' }),
+        } as Response)
+    );
+
+    render(<App />);
+    await waitFor(() =>
+      expect(screen.getByRole('option', { name: 'Porsche 911 GT3 R' })).toBeInTheDocument()
+    );
+
+    const input = screen.getByTestId('file-input');
+    await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
+    await userEvent.selectOptions(
+      screen.getByLabelText(/car model/i),
+      screen.getByRole('option', { name: 'Porsche 911 GT3 R' })
+    );
+
+    fireEvent.submit(document.querySelector('form')!);
+
+    await waitFor(() =>
+      expect(screen.getByRole('alert')).toHaveTextContent(/unknown car model/i)
+    );
   });
 
   it('shows config error banner when fetch fails', async () => {

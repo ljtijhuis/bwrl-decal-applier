@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import path from 'node:path';
 
 test.describe('Decal Applier smoke tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -34,5 +35,19 @@ test.describe('Decal Applier smoke tests', () => {
   test('driver class selector hidden for car without class decals', async ({ page }) => {
     await page.getByLabel(/car model/i).selectOption('porsche-911-gt3-r');
     await expect(page.getByLabel(/driver class/i)).not.toBeVisible();
+  });
+
+  test('completes the full apply flow and downloads a PNG', async ({ page }) => {
+    const fixturePath = path.join(import.meta.dirname, 'fixtures', 'minimal.png');
+
+    await page.getByLabel(/car model/i).selectOption('porsche-911-gt3-r');
+    await page.locator('input[type="file"]').setInputFiles(fixturePath);
+
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      page.getByRole('button', { name: /apply decals/i }).click(),
+    ]);
+
+    expect(download.suggestedFilename()).toBe('livery-with-decals.png');
   });
 });

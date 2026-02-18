@@ -4,11 +4,13 @@ import { CarModelSelect } from './components/CarModelSelect';
 import { DriverClassSelect } from './components/DriverClassSelect';
 import { ApplyButton } from './components/ApplyButton';
 import { useConfig } from './hooks/useConfig';
+import { useApply } from './hooks/useApply';
 import type { DriverClass } from './types/config';
 import './App.css';
 
 export function App() {
   const { config, loading, error: configError } = useConfig();
+  const { apply, isLoading, error: applyError } = useApply();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [carModelId, setCarModelId] = useState<string>('');
@@ -23,11 +25,15 @@ export function App() {
   };
 
   const isApplyEnabled =
-    selectedFile !== null && carModelId !== '' && (!needsClassDecal || driverClass !== '');
+    selectedFile !== null &&
+    carModelId !== '' &&
+    (!needsClassDecal || driverClass !== '') &&
+    !isLoading;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Phase 2: wire up to /api/apply
+    if (!selectedFile || !carModelId) return;
+    await apply({ file: selectedFile, carModelId, driverClass });
   };
 
   return (
@@ -41,6 +47,12 @@ export function App() {
         {configError && (
           <p className="error-banner" role="alert">
             Could not load car configuration: {configError}
+          </p>
+        )}
+
+        {applyError && (
+          <p className="error-banner" role="alert">
+            {applyError}
           </p>
         )}
 
@@ -60,7 +72,7 @@ export function App() {
             onChange={setDriverClass}
           />
 
-          <ApplyButton disabled={!isApplyEnabled} />
+          <ApplyButton disabled={!isApplyEnabled} isLoading={isLoading} />
         </form>
       </main>
     </div>

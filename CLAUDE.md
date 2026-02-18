@@ -109,6 +109,10 @@ Keep the following files up to date whenever user-facing behaviour, architecture
 
 Documentation updates are part of the definition of done.
 
+### During planning
+
+When producing an implementation plan, always include a **Documentation** section that identifies which of the above files need updating and what specifically will change (e.g. new endpoint added → ARCHITECTURE.md; new setup step → CONTRIBUTING.md; user-facing behaviour changes → README.md). Documentation file updates must appear as explicit line items in the plan and in the implementation steps, not as an afterthought.
+
 ## Development Notes
 
 ### npm workspaces and binary resolution
