@@ -66,7 +66,7 @@ describe('App', () => {
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
 
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
@@ -83,12 +83,12 @@ describe('App', () => {
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
 
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Ferrari 296 GT3' })
     );
 
     // Driver class selector should now be visible
-    expect(screen.getByLabelText(/driver class/i)).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: /driver class/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /apply decals/i })).toBeDisabled();
   });
 
@@ -102,12 +102,12 @@ describe('App', () => {
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
 
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Ferrari 296 GT3' })
     );
 
     await userEvent.selectOptions(
-      screen.getByLabelText(/driver class/i),
+      screen.getByRole('combobox', { name: /driver class/i }),
       screen.getByRole('option', { name: 'AM' })
     );
 
@@ -122,21 +122,21 @@ describe('App', () => {
 
     // Select Ferrari and pick a driver class
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Ferrari 296 GT3' })
     );
     await userEvent.selectOptions(
-      screen.getByLabelText(/driver class/i),
+      screen.getByRole('combobox', { name: /driver class/i }),
       screen.getByRole('option', { name: 'PRO' })
     );
 
     // Switch to Porsche — driver class selector should disappear
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
-    expect(screen.queryByLabelText(/driver class/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('combobox', { name: /driver class/i })).not.toBeInTheDocument();
   });
 
   it('triggers download when form is submitted successfully', async () => {
@@ -161,7 +161,7 @@ describe('App', () => {
     const input = screen.getByTestId('file-input');
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
@@ -192,7 +192,7 @@ describe('App', () => {
     const input = screen.getByTestId('file-input');
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 
@@ -225,7 +225,7 @@ describe('App', () => {
     const input = screen.getByTestId('file-input');
     await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
     await userEvent.selectOptions(
-      screen.getByLabelText(/car model/i),
+      screen.getByRole('combobox', { name: /car model/i }),
       screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
     );
 

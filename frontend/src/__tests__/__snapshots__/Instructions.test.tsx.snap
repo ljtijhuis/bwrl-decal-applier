@@ -1,0 +1,282 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Instructions > matches snapshot 1`] = `
+<div>
+  <section
+    aria-label="How to use this tool"
+    class="instructions"
+  >
+    <h2
+      class="instructions__heading"
+    >
+      How to use this tool
+    </h2>
+    <ol
+      class="instructions__list"
+    >
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Find your base livery
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Your TGA is in 
+              <code>
+                Documents/iRacing/paint/[car folder]
+              </code>
+              , named
+               
+              <code>
+                car_[yourCustomerID].tga
+              </code>
+              . If it isn't there yet, open Trading Paints, run your paint once in a session, and the Downloader will save it automatically.
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Upload your livery
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Drag-and-drop or click to select your file in the upload area. Both TGA and PNG are supported.
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Select your car model
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Choose the car you're racing from the dropdown.
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Select your driver class
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Choose AM, Pro-Am, Pro, or Rookie (only shown for cars with class badges).
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Click "Apply Decals"
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              The tool composites the league decals onto your livery and automatically downloads the result as a PNG.
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Go to Trading Paints
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Visit
+               
+              <a
+                href="https://www.tradingpaints.com"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                tradingpaints.com
+              </a>
+               
+              and sign in, then click 
+              <strong>
+                Upload
+              </strong>
+              .
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Upload the PNG
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Select the downloaded PNG, choose the correct vehicle, and upload to
+               
+              <strong>
+                My Paints
+              </strong>
+              .
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="instructions__item"
+      >
+        <label
+          class="instructions__label"
+        >
+          <input
+            class="instructions__checkbox"
+            type="checkbox"
+          />
+          <span
+            class="instructions__step-content"
+          >
+            <strong
+              class="instructions__step-title"
+            >
+              Upload your spec map (optional)
+            </strong>
+            <span
+              class="instructions__step-body"
+            >
+              Also upload 
+              <code>
+                car_spec_[yourCustomerID].mip
+              </code>
+               (or 
+              <code>
+                .map
+              </code>
+              ) from the same iRacing paints folder. This controls the shiny/matte finish of your car.
+            </span>
+          </span>
+        </label>
+      </li>
+    </ol>
+    <p
+      class="instructions__tip"
+    >
+      <strong>
+        First time?
+      </strong>
+       Make sure the
+       
+      <a
+        href="https://www.tradingpaints.com/page/Install"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Trading Paints Downloader
+      </a>
+       
+      app is installed and running — it distributes your livery to other racers in-session.
+    </p>
+  </section>
+</div>
+`;

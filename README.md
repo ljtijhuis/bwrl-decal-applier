@@ -14,6 +14,21 @@ League members used to apply decals manually in image editing software. This too
 
 No account required. Your file is processed and returned immediately; nothing is stored.
 
+## Using the app
+
+A step-by-step checklist is shown at the top of the page for reference. Here is the full flow:
+
+1. **Find your base livery** — your TGA is in `Documents/iRacing/paint/[car folder]`, named `car_[yourCustomerID].tga`. If it isn't there yet, run your paint in Trading Paints once and the Downloader will save it automatically.
+2. **Upload your TGA** — drag-and-drop or click to select the file.
+3. **Select your car model** — choose the car you're racing from the dropdown.
+4. **Select your driver class** — choose AM, Pro-Am, Pro, or Rookie (only shown for cars with class badges).
+5. **Click "Apply Decals"** — the tool downloads the result as a PNG automatically.
+6. **Go to Trading Paints** — sign in and click **Upload**.
+7. **Upload the PNG** — select the downloaded PNG, choose the correct vehicle, and upload to **My Paints**.
+8. **Upload your spec map** — also upload `car_spec_[yourCustomerID].mip` (or `.map`) from the same iRacing paints folder, so the shiny/matte finish displays correctly in-game.
+
+> **First time?** Install and run the [Trading Paints Downloader](https://www.tradingpaints.com/page/Install) — it distributes your livery to other racers in-session.
+
 ## Supported formats
 
 | Input | Output |

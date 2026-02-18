@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { CarModelSelect } from './components/CarModelSelect';
 import { DriverClassSelect } from './components/DriverClassSelect';
 import { ApplyButton } from './components/ApplyButton';
 import { LiveryPreview } from './components/LiveryPreview';
+import { Instructions } from './components/Instructions';
 import { useConfig } from './hooks/useConfig';
 import { useApply } from './hooks/useApply';
 import type { DriverClass } from './types/config';
@@ -24,6 +25,15 @@ export function App() {
     setCarModelId(id);
     setDriverClass('');
   };
+
+  const autoCompleted = useMemo(() => {
+    const s = new Set<number>();
+    if (selectedFile) s.add(1);
+    if (carModelId) s.add(2);
+    if (carModelId && (!needsClassDecal || driverClass !== '')) s.add(3);
+    if (resultUrl) s.add(4);
+    return s;
+  }, [selectedFile, carModelId, needsClassDecal, driverClass, resultUrl]);
 
   const isApplyEnabled =
     selectedFile !== null &&
@@ -46,38 +56,42 @@ export function App() {
 
       <main className="app-main">
         <div className="main-content">
-          {configError && (
-            <p className="error-banner" role="alert">
-              Could not load car configuration: {configError}
-            </p>
-          )}
+          <Instructions autoCompleted={autoCompleted} />
 
-          {applyError && (
-            <p className="error-banner" role="alert">
-              {applyError}
-            </p>
-          )}
+          <div className="form-column">
+            {configError && (
+              <p className="error-banner" role="alert">
+                Could not load car configuration: {configError}
+              </p>
+            )}
 
-          <form className="apply-form" onSubmit={handleSubmit}>
-            <FileUpload selectedFile={selectedFile} onFileChange={setSelectedFile} />
+            {applyError && (
+              <p className="error-banner" role="alert">
+                {applyError}
+              </p>
+            )}
 
-            <CarModelSelect
-              config={config}
-              loading={loading}
-              value={carModelId}
-              onChange={handleCarModelChange}
-            />
+            <form className="apply-form" onSubmit={handleSubmit}>
+              <FileUpload selectedFile={selectedFile} onFileChange={setSelectedFile} />
 
-            <DriverClassSelect
-              visible={needsClassDecal}
-              value={driverClass}
-              onChange={setDriverClass}
-            />
+              <CarModelSelect
+                config={config}
+                loading={loading}
+                value={carModelId}
+                onChange={handleCarModelChange}
+              />
 
-            <ApplyButton disabled={!isApplyEnabled} isLoading={isLoading} />
-          </form>
+              <DriverClassSelect
+                visible={needsClassDecal}
+                value={driverClass}
+                onChange={setDriverClass}
+              />
 
-          <LiveryPreview beforeFile={selectedFile} resultUrl={resultUrl} />
+              <ApplyButton disabled={!isApplyEnabled} isLoading={isLoading} />
+            </form>
+
+            <LiveryPreview beforeFile={selectedFile} resultUrl={resultUrl} />
+          </div>
         </div>
       </main>
     </div>

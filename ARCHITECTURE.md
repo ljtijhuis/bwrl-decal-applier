@@ -38,6 +38,7 @@ Express (backend)
 
 Built with Vite, React, and TypeScript.
 
+- **Instructions** — interactive step-by-step checklist at the top of the page; covers the full workflow from finding the base livery TGA through uploading to Trading Paints; checkboxes are session-local state only
 - **Upload form** — drag-and-drop or file picker; validates type (PNG/TGA) and size (≤ 20 MB) on the client before submission
 - **Car model selector** — dropdown grouped by series (`GT3 Sprint`, `BWEC`, `Falken`) using `<optgroup>` elements, populated from `/api/config` at app startup
 - **Driver class selector** — shown only when the selected car model has class-specific decals

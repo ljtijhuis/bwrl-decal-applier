@@ -50,10 +50,36 @@ body {
 
 .main-content {
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1080px;
+}
+
+.main-content > .instructions {
+  flex: 1 1 420px;
+  min-width: 300px;
+  position: sticky;
+  top: 2.5rem;
+}
+
+.form-column {
+  flex: 0 0 460px;
+  min-width: 300px;
+  display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 100%;
-  max-width: 520px;
+}
+
+@media (max-width: 780px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .main-content > .instructions {
+    position: static;
+  }
 }
 
 /* Form */
@@ -226,6 +252,114 @@ body {
   animation: spin 0.7s linear infinite;
   vertical-align: middle;
   margin-right: 0.45em;
+}
+
+/* Instructions checklist */
+.instructions {
+  background: #16161c;
+  border: 1px solid #2a2a35;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+
+.instructions__heading {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.instructions__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.instructions__item {
+  display: flex;
+}
+
+.instructions__label {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  cursor: pointer;
+  width: 100%;
+}
+
+.instructions__checkbox {
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  accent-color: #5566cc;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+}
+
+.instructions__step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.4;
+}
+
+.instructions__step-title {
+  font-size: 0.9rem;
+  color: #e8e8e8;
+  transition: color 0.15s;
+}
+
+.instructions__step-body {
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.5;
+}
+
+.instructions__step-body code {
+  background: #1e1e28;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #7788ee;
+}
+
+.instructions__step-body a {
+  color: #7788ee;
+  text-decoration: none;
+}
+
+.instructions__step-body a:hover {
+  text-decoration: underline;
+}
+
+.instructions__item--done .instructions__step-title,
+.instructions__item--done .instructions__step-body {
+  text-decoration: line-through;
+  color: #555;
+}
+
+.instructions__tip {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: #777;
+  line-height: 1.5;
+  border-top: 1px solid #2a2a35;
+  padding-top: 0.85rem;
+}
+
+.instructions__tip a {
+  color: #7788ee;
+  text-decoration: none;
+}
+
+.instructions__tip a:hover {
+  text-decoration: underline;
 }
 
 /* Error banner */
