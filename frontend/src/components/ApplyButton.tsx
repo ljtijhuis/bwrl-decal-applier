@@ -6,7 +6,14 @@ interface ApplyButtonProps {
 export function ApplyButton({ disabled, isLoading }: ApplyButtonProps) {
   return (
     <button type="submit" disabled={disabled} className="apply-button">
-      {isLoading ? 'Applying…' : 'Apply Decals'}
+      {isLoading ? (
+        <>
+          <span className="spinner" aria-hidden="true" />
+          Applying…
+        </>
+      ) : (
+        'Apply Decals'
+      )}
     </button>
   );
 }

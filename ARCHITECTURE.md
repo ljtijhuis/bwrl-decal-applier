@@ -42,7 +42,7 @@ Built with Vite, React, and TypeScript.
 - **Car model selector** — dropdown grouped by series (`GT3 Sprint`, `BWEC`, `Falken`) using `<optgroup>` elements, populated from `/api/config` at app startup
 - **Driver class selector** — shown only when the selected car model has class-specific decals
 - **Apply button** — POSTs to `/api/apply`, then triggers a browser download of the returned PNG *(Phase 2)*
-- **Preview** — shows a thumbnail of the uploaded livery before submission and the composited result after *(Phase 4)*
+- **LiveryPreview** — displays a before/after view: a thumbnail of the uploaded livery (PNG files only; TGA shows a placeholder) and, once compositing completes, the resulting PNG alongside a note on how to upload to Trading Paints *(Phase 4)*
 
 ### Backend (`backend/`)
 

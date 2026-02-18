@@ -55,6 +55,74 @@ describe('useApply', () => {
     expect(result.current.error).toBeNull();
   });
 
+  it('starts with resultUrl null', () => {
+    stubFetchSuccess();
+    const { result } = renderHook(() => useApply());
+    expect(result.current.resultUrl).toBeNull();
+  });
+
+  it('sets resultUrl after successful apply', async () => {
+    stubFetchSuccess();
+    const { result } = renderHook(() => useApply());
+
+    await act(async () => {
+      await result.current.apply(baseParams);
+    });
+
+    await waitFor(() => expect(result.current.resultUrl).toBe(mockObjectURL));
+    expect(mockCreateObjectURL).toHaveBeenCalledWith(mockBlob);
+  });
+
+  it('resultUrl remains null on apply error', async () => {
+    stubFetchError(400, { error: 'Unknown car model' });
+    const { result } = renderHook(() => useApply());
+
+    await act(async () => {
+      await result.current.apply(baseParams);
+    });
+
+    await waitFor(() => expect(result.current.error).toBe('Unknown car model'));
+    expect(result.current.resultUrl).toBeNull();
+  });
+
+  it('revokes previous resultUrl and resets it when a new apply starts', async () => {
+    stubFetchSuccess();
+    const { result } = renderHook(() => useApply());
+
+    await act(async () => {
+      await result.current.apply(baseParams);
+    });
+
+    await waitFor(() => expect(result.current.resultUrl).toBe(mockObjectURL));
+
+    mockRevokeObjectURL.mockClear();
+
+    let resolveSecond!: (value: Response) => void;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockImplementation(
+        () =>
+          new Promise<Response>((resolve) => {
+            resolveSecond = resolve;
+          })
+      )
+    );
+
+    act(() => {
+      void result.current.apply(baseParams);
+    });
+
+    expect(mockRevokeObjectURL).toHaveBeenCalledWith(mockObjectURL);
+    expect(result.current.resultUrl).toBeNull();
+
+    await act(async () => {
+      resolveSecond({
+        ok: true,
+        blob: () => Promise.resolve(mockBlob),
+      } as Response);
+    });
+  });
+
   it('sets isLoading to true during apply', async () => {
     let resolveResponse!: (value: Response) => void;
     vi.stubGlobal(

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type { DriverClass } from '../types/config';
 
 interface ApplyParams {
@@ -11,6 +11,7 @@ interface UseApplyResult {
   apply: (params: ApplyParams) => Promise<void>;
   isLoading: boolean;
   error: string | null;
+  resultUrl: string | null;
 }
 
 function triggerDownload(blob: Blob, filename: string): void {
@@ -27,8 +28,23 @@ function triggerDownload(blob: Blob, filename: string): void {
 export function useApply(): UseApplyResult {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const resultUrlRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resultUrlRef.current) {
+        URL.revokeObjectURL(resultUrlRef.current);
+      }
+    };
+  }, []);
 
   const apply = useCallback(async ({ file, carModelId, driverClass }: ApplyParams) => {
+    if (resultUrlRef.current) {
+      URL.revokeObjectURL(resultUrlRef.current);
+      resultUrlRef.current = null;
+    }
+    setResultUrl(null);
     setIsLoading(true);
     setError(null);
 
@@ -47,6 +63,9 @@ export function useApply(): UseApplyResult {
       }
 
       const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      resultUrlRef.current = url;
+      setResultUrl(url);
       triggerDownload(blob, 'livery-with-decals.png');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
@@ -55,5 +74,5 @@ export function useApply(): UseApplyResult {
     }
   }, []);
 
-  return { apply, isLoading, error };
+  return { apply, isLoading, error, resultUrl };
 }

@@ -203,6 +203,40 @@ describe('App', () => {
     );
   });
 
+  it('shows composited result preview after successful apply', async () => {
+    const mockBlob = new Blob(['png-data'], { type: 'image/png' });
+    const mockCreateObjectURL = vi.fn(() => 'blob:result');
+    const mockRevokeObjectURL = vi.fn();
+
+    vi.unstubAllGlobals();
+    vi.stubGlobal('URL', { createObjectURL: mockCreateObjectURL, revokeObjectURL: mockRevokeObjectURL });
+    vi.stubGlobal(
+      'fetch',
+      vi.fn()
+        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(configWithClass) } as Response)
+        .mockResolvedValueOnce({ ok: true, blob: () => Promise.resolve(mockBlob) } as Response)
+    );
+
+    render(<App />);
+    await waitFor(() =>
+      expect(screen.getByRole('option', { name: 'Porsche 992 GT3 R' })).toBeInTheDocument()
+    );
+
+    const input = screen.getByTestId('file-input');
+    await userEvent.upload(input, new File([new Uint8Array(100)], 'livery.png', { type: 'image/png' }));
+    await userEvent.selectOptions(
+      screen.getByLabelText(/car model/i),
+      screen.getByRole('option', { name: 'Porsche 992 GT3 R' })
+    );
+
+    fireEvent.submit(document.querySelector('form')!);
+
+    await waitFor(() =>
+      expect(screen.getByAltText(/composited result/i)).toBeInTheDocument()
+    );
+    expect(screen.getByAltText(/composited result/i)).toHaveAttribute('src', 'blob:result');
+  });
+
   it('shows config error banner when fetch fails', async () => {
     vi.unstubAllGlobals();
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Connection refused')));
