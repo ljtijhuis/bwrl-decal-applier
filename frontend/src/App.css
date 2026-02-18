@@ -1,0 +1,160 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0f0f11;
+  color: #e8e8e8;
+  min-height: 100vh;
+}
+
+/* Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background: #1a1a20;
+  border-bottom: 1px solid #2a2a35;
+  padding: 1.5rem 2rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.app-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem;
+}
+
+/* Form */
+.apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-field select {
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #1a1a20;
+  color: #e8e8e8;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form-field select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* File upload */
+.file-upload__zone {
+  border: 2px dashed #333;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #16161c;
+}
+
+.file-upload__zone:hover,
+.file-upload__zone--drag-over {
+  border-color: #5566cc;
+  background: #1a1a28;
+}
+
+.file-upload__zone:focus {
+  outline: 2px solid #5566cc;
+  outline-offset: 2px;
+}
+
+.file-upload__filename {
+  font-weight: 600;
+  color: #7788ee;
+  word-break: break-all;
+}
+
+.file-upload__hint {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.5rem 0 0;
+}
+
+.file-upload__error {
+  color: #e05555;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Apply button */
+.apply-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  background: #5566cc;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.apply-button:hover:not(:disabled) {
+  background: #4455bb;
+}
+
+.apply-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Error banner */
+.error-banner {
+  background: #3a1515;
+  border: 1px solid #7a3030;
+  border-radius: 6px;
+  color: #e07070;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  font-size: 0.9rem;
+}

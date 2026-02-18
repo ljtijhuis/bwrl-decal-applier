@@ -4,8 +4,8 @@ Thanks for your interest in contributing to the Broken Wing Racing League Decal 
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org) 20 or later
-- [npm](https://www.npmjs.com) 10 or later (bundled with Node 20)
+- [Node.js](https://nodejs.org) 20 or later (Node 24 recommended; the repo ships a `.nvmrc` for nvm users)
+- [npm](https://www.npmjs.com) 10 or later (bundled with Node 20+)
 - [Docker](https://www.docker.com) and Docker Compose (optional, for the containerised setup)
 - [Git](https://git-scm.com)
 
@@ -14,10 +14,10 @@ Thanks for your interest in contributing to the Broken Wing Racing League Decal 
 ```bash
 git clone https://github.com/broken-wing-racing/decal-applier.git
 cd decal-applier
-npm install --workspaces
+npm install
 ```
 
-This installs dependencies for both `frontend/` and `backend/` via npm workspaces.
+`npm install` at the root installs dependencies for both `frontend/` and `backend/` via npm workspaces.
 
 ## Running the app locally
 
@@ -28,24 +28,24 @@ docker compose up
 ```
 
 - Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3000`
+- Backend: `http://localhost:3001`
 
 ### Option B — directly with Node
 
-Run the backend and frontend in two terminals, or use a tool like `concurrently`:
-
-```bash
-# Terminal 1
-npm run dev --workspace=backend
-
-# Terminal 2
-npm run dev --workspace=frontend
-```
-
-Or from the root (if a root-level `dev` script is configured):
+From the repo root, `npm run dev` starts both services in parallel via `concurrently`:
 
 ```bash
 npm run dev
+```
+
+Or start them separately:
+
+```bash
+# Terminal 1
+npm run dev --workspace=backend    # http://localhost:3001
+
+# Terminal 2
+npm run dev --workspace=frontend   # http://localhost:5173
 ```
 
 ## Running tests
@@ -56,31 +56,32 @@ npm run dev
 npm test --workspaces
 ```
 
-### Backend tests only
+### Backend tests only (Jest + Supertest)
 
 ```bash
 npm test --workspace=backend
 ```
 
-### Frontend tests only
+### Frontend unit tests only (Vitest + Testing Library)
 
 ```bash
 npm test --workspace=frontend
 ```
 
-### End-to-end tests
+### End-to-end tests (Playwright)
 
-E2E tests use [Playwright](https://playwright.dev) and require the full app to be running:
+E2E tests require the full app to be running first:
 
 ```bash
-# Start the app first (either via Docker Compose or the dev scripts above)
-npm run test:e2e
+npm run dev                          # start the app
+npm run test:e2e --workspace=frontend  # run Playwright tests
 ```
 
 ### Coverage report
 
 ```bash
-npm run test:coverage --workspaces
+npm run test:coverage --workspace=frontend
+npm run test:coverage --workspace=backend
 ```
 
 We target **80%+ coverage** across unit, integration, and E2E tests. Pull requests that drop coverage below this threshold will need to include additional tests.

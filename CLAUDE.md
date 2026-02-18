@@ -6,50 +6,119 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Broken Wing Racing League Decal Applier** — a web app that lets iRacing league members upload their car livery, apply league decals automatically, and download the result for upload to Trading Paints.
 
-See `project_idea.md` for the full product specification and open questions.
+See `plans/project_plan.md` for the phased implementation plan and progress tracker.
 
-## Planned Architecture
+## Architecture
 
-- **Frontend**: React (modern framework)
-- **Backend**: Node.js or Python (open-source friendly, community contributions encouraged)
-- **Image processing**: server-side compositing of decals onto livery files
-- **Decal assets**: upload through an admin interface that lets an admin upload car-specific files.
+Monorepo using npm workspaces:
+
+```
+/
+├── frontend/   Vite + React + TypeScript — user interface
+├── backend/    Node.js + Express 5 + TypeScript — image processing API
+└── decals/     PNG decal assets + config.json placement rules
+```
+
+- **Image processing**: Sharp (server-side compositing)
+- **Auth**: None — fully anonymous, no accounts, no data stored
+- **Decal assets**: PNG files checked into the repo; placement rules in `decals/config.json`
+- **Output**: Always PNG, regardless of input format (PNG or TGA accepted)
+- **Trading Paints**: No API exists; users download the result and upload manually
 
 ## Key Domain Concepts
 
-- **Livery**: a custom car skin file uploaded by the user (PNG or compatible format for Trading Paints)
-- **Decal**: a league-branded overlay (logo, sponsor, driver class badge) applied on top of the livery; assets exist in PNG, PSD, TGA formats and vary by car model
-- **Car/Series**: GT3 cars and LMPs (among others) — decals and livery files are all the same dimensions but templates are different per car model
-- **Driver class**: AM, PRO-AM, PRO, ROOKIE — some series use class-specific decals
-- **Trading Paints**: the third-party platform where users upload finished liveries; output format must be compatible
+- **Livery**: a custom car skin file uploaded by the user (PNG or TGA)
+- **Decal**: a league-branded overlay (logo, sponsor, driver class badge) composited on top of the livery; assets are PNG and vary by car model
+- **Car model**: each car has its own decal template; all livery images share the same pixel dimensions
+- **Driver class**: AM, PRO-AM, PRO, ROOKIE — some car models have class-specific badge decals
+- **Trading Paints**: third-party platform where users upload finished liveries
+
+## Commands
+
+### Setup
+
+```bash
+npm install      # installs all workspace dependencies
+```
+
+### Development
+
+```bash
+npm run dev                          # start frontend (port 5173) + backend (port 3001) in parallel
+npm run dev --workspace=frontend     # frontend only
+npm run dev --workspace=backend      # backend only
+```
+
+### Testing
+
+```bash
+npm test --workspaces                         # all unit + integration tests
+npm test --workspace=frontend                 # frontend unit tests (Vitest)
+npm test --workspace=backend                  # backend integration tests (Jest)
+npm run test:coverage --workspace=frontend    # frontend coverage report
+npm run test:coverage --workspace=backend     # backend coverage report
+npm run test:e2e --workspace=frontend         # Playwright e2e (requires app running)
+```
+
+### Type checking
+
+```bash
+npm run typecheck                    # type-check all workspaces
+npm run typecheck --workspace=frontend
+npm run typecheck --workspace=backend
+```
+
+### Linting & formatting
+
+```bash
+npm run lint      # ESLint across all workspaces
+npm run format    # Prettier across all workspaces
+```
+
+### Building
+
+```bash
+npm run build --workspace=frontend   # Vite production build
+npm run build --workspace=backend    # tsc compile to dist/
+```
 
 ## Testing Requirements
 
-Every feature must be built with testability in mind and verified through automated tests. Target **80%+ test coverage** across the codebase.
+Every feature must be built with testability in mind. Target **80%+ coverage** across the codebase.
 
-- **Unit tests**: cover individual functions, components, and modules in isolation
-- **Integration tests**: cover interactions between layers (e.g. API endpoints, image processing pipelines, database/storage operations)
-- **End-to-end tests**: cover critical user flows (upload livery → apply decals → download result) where feasible
+- **Unit tests**: components, hooks, pure functions (Vitest for frontend, Jest for backend)
+- **Integration tests**: Express routes with real Sharp calls against fixture images
+- **E2E tests**: Playwright for critical user flows (upload → apply → download)
 
-When planning any implementation task, include test coverage as a required deliverable — not an afterthought. Prefer designing code so it is easy to test: pure functions, dependency injection, clear separation of concerns.
+Tests are part of the definition of done — code is not complete until tests pass.
+
+Prefer pure functions, dependency injection, and clear separation of concerns to keep code testable.
+
+### Testing gotchas
+
+- **`userEvent.upload` respects `<input accept>`**: when testing file-type rejection logic, use `fireEvent.change(input, { target: { files: [file] } })` instead of `userEvent.upload`. `userEvent` silently drops files that don't match the accept attribute, so the component's JS validation code never runs.
+- **Async hook state updates**: components that fetch on mount (e.g. `useConfig`) will trigger an `act()` warning in the first test that renders them without awaiting the fetch. This is benign — use `waitFor` in subsequent assertions.
 
 ## Documentation Requirements
 
-Keep the following files up to date whenever user-facing behaviour, architecture, or contributor workflows change. Reference them when planning work to ensure nothing drifts.
+Keep the following files up to date whenever user-facing behaviour, architecture, or contributor workflows change:
 
 - **`README.md`** — user-facing: what the app does, how to use it, where to get help
-- **`ARCHITECTURE.md`** — technical: how the system is structured, key design decisions, data flow, image processing pipeline, component responsibilities
-- **`CONTRIBUTING.md`** — contributor-facing: prerequisites, installing dependencies, running the app locally, running tests, submitting changes, code style guidelines
+- **`ARCHITECTURE.md`** — technical: system structure, key design decisions, data flow, image processing pipeline
+- **`CONTRIBUTING.md`** — contributor-facing: prerequisites, local setup, running tests, submitting changes
 
-Documentation updates are part of the definition of done for every task — code is not complete until the relevant docs reflect the current state.
+Documentation updates are part of the definition of done.
 
-## Open Questions (resolve before implementing)
+## Development Notes
 
-Before writing image-processing or upload logic, clarify:
-1. Exact file formats accepted by Trading Paints
-2. Decal placement coordinates and scaling rules per car model
-3. The third decal asset format (beyond PNG and PSD) stored in Google Drive
-4. Whether transparency / layer blending beyond simple overlay is needed
-5. Authentication requirements (anonymous uploads vs. user accounts, rate limiting)
-6. Hosting/deployment environment
-7. Whether to integrate with a Trading Paints API or only produce downloadable files
+### npm workspaces and binary resolution
+
+Jest and other CLI tools are hoisted to the root `node_modules/.bin/` by npm workspaces — they don't exist under `backend/node_modules/.bin/`. Use `$(npm root)/.bin/<tool>` in scripts to resolve the hoisted binary correctly.
+
+### Node version
+
+This project requires Node 20+ and is pinned to Node 24 via `.nvmrc`. If you use nvm and don't have Node 24 as your default, run `nvm use` after cloning.
+
+### Decal config schema
+
+`decals/config.json` is the single source of truth for car models. Cars without class badges omit the `classSpecific` key entirely. The `/api/config` endpoint transforms this into `{ carModels: { [id]: { label, hasClassDecals } } }` for the frontend.

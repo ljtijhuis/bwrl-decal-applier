@@ -27,7 +27,8 @@ The output PNG is compatible with Trading Paints livery uploads.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org) 20+
+- [Node.js](https://nodejs.org) 20+ (Node 24 recommended; the repo ships a `.nvmrc` for nvm users)
+- [npm](https://www.npmjs.com) 10+
 - [Docker](https://www.docker.com) and Docker Compose (optional, for the containerised setup)
 
 ### With Docker Compose (recommended)
@@ -41,15 +42,15 @@ The app will be available at `http://localhost:5173`.
 ### Without Docker
 
 ```bash
-# Install dependencies
-npm install --workspaces
+# Install all workspace dependencies
+npm install
 
-# Start backend and frontend in parallel
+# Start backend (port 3001) and frontend (port 5173) in parallel
 npm run dev
 ```
 
 - Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3000`
+- Backend: `http://localhost:3001`
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for a full development setup guide.
 

@@ -1,0 +1,44 @@
+{
+  "carModels": {
+    "ferrari-296-gt3": {
+      "label": "Ferrari 296 GT3",
+      "decals": {
+        "base": [
+          {
+            "file": "example/league-logo.png",
+            "x": 100,
+            "y": 200,
+            "width": 150,
+            "height": 80
+          }
+        ],
+        "classSpecific": {
+          "AM": [{ "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }],
+          "PRO-AM": [
+            { "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }
+          ],
+          "PRO": [
+            { "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }
+          ],
+          "ROOKIE": [
+            { "file": "example/class-am.png", "x": 50, "y": 50, "width": 60, "height": 60 }
+          ]
+        }
+      }
+    },
+    "porsche-911-gt3-r": {
+      "label": "Porsche 911 GT3 R",
+      "decals": {
+        "base": [
+          {
+            "file": "example/league-logo.png",
+            "x": 120,
+            "y": 180,
+            "width": 150,
+            "height": 80
+          }
+        ]
+      }
+    }
+  }
+}

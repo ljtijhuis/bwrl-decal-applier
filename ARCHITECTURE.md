@@ -41,8 +41,8 @@ Built with Vite, React, and TypeScript.
 - **Upload form** — drag-and-drop or file picker; validates type (PNG/TGA) and size (≤ 20 MB) on the client before submission
 - **Car model selector** — dropdown populated from `decals/config.json` at app startup (or bundled at build time)
 - **Driver class selector** — shown only when the selected car model has class-specific decals
-- **Apply button** — POSTs to `/api/apply`, then triggers a browser download of the returned PNG
-- **Preview** — shows a thumbnail of the uploaded livery before submission and the composited result after
+- **Apply button** — POSTs to `/api/apply`, then triggers a browser download of the returned PNG *(Phase 2)*
+- **Preview** — shows a thumbnail of the uploaded livery before submission and the composited result after *(Phase 4)*
 
 ### Backend (`backend/`)
 
@@ -50,9 +50,9 @@ Built with Node.js, Express, and TypeScript.
 
 | Route | Purpose |
 |-------|---------|
-| `GET /health` | Liveness check |
-| `GET /api/config` | Returns the car model list (labels + whether class selection is needed) |
-| `POST /api/apply` | Accepts livery upload, returns composited PNG |
+| `GET /health` | Liveness check — returns `{ status: "ok", timestamp }` |
+| `GET /api/config` | Returns `{ carModels: { [id]: { label, hasClassDecals } } }` |
+| `POST /api/apply` | Accepts livery upload, returns composited PNG *(Phase 2)* |
 
 **Image compositing** uses Sharp:
 - TGA files are decoded to a raw buffer before being passed to Sharp

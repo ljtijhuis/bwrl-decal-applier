@@ -16,9 +16,9 @@ League members currently apply decals manually in image editing software before 
 
 ---
 
-## Progres tracker
+## Progress tracker
 
-[ ] Phase 1
+[x] Phase 1
 [ ] Phase 2
 [ ] Phase 3
 [ ] Phase 4
