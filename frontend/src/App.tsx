@@ -5,6 +5,7 @@ import { DriverClassSelect } from './components/DriverClassSelect';
 import { ApplyButton } from './components/ApplyButton';
 import { LiveryPreview } from './components/LiveryPreview';
 import { Instructions } from './components/Instructions';
+import { Sponsors } from './components/Sponsors';
 import { useConfig } from './hooks/useConfig';
 import { useApply } from './hooks/useApply';
 import type { DriverClass } from './types/config';
@@ -50,8 +51,17 @@ export function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Broken Wing Racing League</h1>
-        <p className="app-subtitle">Decal Applier</p>
+        <div className="app-header__inner">
+          <img
+            src="/bwrl-logo.png"
+            alt="Broken Wing Racing League logo"
+            className="app-header__logo"
+          />
+          <div className="app-header__text">
+            <h1 className="app-header__title">Broken Wing Racing League</h1>
+            <p className="app-header__subtitle">Decal Applier</p>
+          </div>
+        </div>
       </header>
 
       <main className="app-main">
@@ -94,6 +104,7 @@ export function App() {
           </div>
         </div>
       </main>
+      <Sponsors />
     </div>
   );
 }

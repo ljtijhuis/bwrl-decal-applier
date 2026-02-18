@@ -110,6 +110,10 @@ TypeScript is used throughout. Avoid `any`; use proper types or `unknown` where 
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for a full walkthrough of how the pieces fit together.
 
+### Updating sponsors
+
+Sponsor data lives entirely in `frontend/src/components/Sponsors.tsx` as a typed `Sponsor[]` array — no backend changes are required to add, remove, or reorder sponsors. Sponsor logo images are stored in `frontend/public/sponsors/`.
+
 ## Adding a new car model
 
 1. **Add the decal PNG file(s)** to the appropriate subdirectory under `decals/`, using the naming convention `{car-name}.png` in kebab-case (e.g. `bwec-gt3/audi-r8-lms-gt3-evo.png`). All decals must be 2048×2048 RGBA PNG files.

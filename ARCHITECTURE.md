@@ -39,6 +39,7 @@ Express (backend)
 Built with Vite, React, and TypeScript.
 
 - **Instructions** — interactive step-by-step checklist at the top of the page; covers the full workflow from finding the base livery TGA through uploading to Trading Paints; checkboxes are session-local state only
+- **Sponsors** — static display-only section rendered below the main tool content; lists league sponsors with logo, name, and external link; sponsor data is a typed `Sponsor[]` array defined directly in `frontend/src/components/Sponsors.tsx` — no API or backend involvement; to add or remove sponsors, edit the `SPONSORS` array in that file
 - **Upload form** — drag-and-drop or file picker; validates type (PNG/TGA) and size (≤ 20 MB) on the client before submission
 - **Car model selector** — dropdown grouped by series (`GT3 Sprint`, `BWEC`, `Falken`) using `<optgroup>` elements, populated from `/api/config` at app startup
 - **Driver class selector** — shown only when the selected car model has class-specific decals
@@ -59,6 +60,15 @@ Built with Node.js, Express, and TypeScript.
 - TGA files are decoded to a raw buffer before being passed to Sharp
 - Decals are composited in order: base decals first, then the class-specific badge
 - Output is always PNG regardless of input format
+
+### Brand assets (`frontend/public/`)
+
+Static files served directly by Vite (development) and the web server (production).
+
+| File/directory | Contents |
+|----------------|----------|
+| `bwrl-logo.png` | BWRL circular badge; used in the page header and as the browser favicon |
+| `sponsors/` | Logo PNGs for each league sponsor; referenced by the `SPONSORS` array in `Sponsors.tsx` |
 
 ### Decal assets (`decals/`)
 

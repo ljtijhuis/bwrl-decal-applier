@@ -113,6 +113,8 @@ Documentation updates are part of the definition of done.
 
 When producing an implementation plan, always include a **Documentation** section that identifies which of the above files need updating and what specifically will change (e.g. new endpoint added → ARCHITECTURE.md; new setup step → CONTRIBUTING.md; user-facing behaviour changes → README.md). Documentation file updates must appear as explicit line items in the plan and in the implementation steps, not as an afterthought.
 
+When we are done planning and about to start execution, copy your generated plan file to the project specific plan folder at `./plans/` **before writing any code**. This must be the first action taken after the user approves the plan, before any file edits or commands.
+
 ## Development Notes
 
 ### npm workspaces and binary resolution

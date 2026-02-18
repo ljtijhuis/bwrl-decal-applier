@@ -1,6 +1,6 @@
 # Broken Wing Racing League — Decal Applier
 
-A web app for [Broken Wing Racing League](https://example.com) members on iRacing. Upload your car livery, select your car model and driver class, and download a finished livery with league decals applied — ready to upload to [Trading Paints](https://www.tradingpaints.com).
+A web app for [Broken Wing Racing League](https://www.brokenwingracingleague.com) members on iRacing. Upload your car livery, select your car model and driver class, and download a finished livery with league decals applied — ready to upload to [Trading Paints](https://www.tradingpaints.com).
 
 ## What it does
 
@@ -68,6 +68,14 @@ npm run dev
 - Backend: `http://localhost:3001`
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for a full development setup guide.
+
+## Branding
+
+The app uses the Broken Wing Racing League brand identity — forest-green header with orange accents, matching the BWRL badge colours.
+
+- **Logo** — served from `frontend/public/bwrl-logo.png`. Replace this file to update the header image and browser favicon simultaneously.
+- **Sponsor logos** — stored in `frontend/public/sponsors/`. To update a sponsor's logo, replace the corresponding PNG file in that directory.
+- **Sponsor list** — defined as a typed array (`SPONSORS`) in `frontend/src/components/Sponsors.tsx`. Edit that array to add, remove, or reorder sponsors. No backend or config changes are needed.
 
 ## Adding a new car model
 

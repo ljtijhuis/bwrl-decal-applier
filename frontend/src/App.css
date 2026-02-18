@@ -7,8 +7,8 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #0f0f11;
+  font-family: 'helvetica-w01-roman', sans-serif;
+  background: #0d0d0d;
   color: #e8e8e8;
   min-height: 100vh;
 }
@@ -21,23 +21,42 @@ body {
 }
 
 .app-header {
-  background: #1a1a20;
-  border-bottom: 1px solid #2a2a35;
-  padding: 1.5rem 2rem;
-  text-align: center;
+  background: linear-gradient(135deg, #1d4030 0%, #285840 100%);
+  border-bottom: 3px solid #f86800;
+  padding: 1.25rem 2rem;
 }
 
-.app-header h1 {
+.app-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.app-header__logo {
+  height: 64px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.app-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.app-header__title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
 }
 
-.app-subtitle {
-  margin: 0.25rem 0 0;
+.app-header__subtitle {
+  margin: 0;
   font-size: 0.9rem;
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .app-main {
@@ -115,13 +134,13 @@ body {
 .preview-image {
   width: 100%;
   border-radius: 6px;
-  border: 1px solid #333;
+  border: 1px solid #2a4a2d;
   display: block;
 }
 
 .preview-placeholder {
-  background: #16161c;
-  border: 1px solid #333;
+  background: #0f1f10;
+  border: 1px solid #2a4a2d;
   border-radius: 6px;
   padding: 1.5rem 1rem;
   text-align: center;
@@ -133,7 +152,7 @@ body {
   display: block;
   margin-top: 0.25rem;
   word-break: break-all;
-  color: #7788ee;
+  color: #f07030;
   font-weight: 600;
 }
 
@@ -161,8 +180,8 @@ body {
 .form-field select {
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
-  border: 1px solid #333;
-  background: #1a1a20;
+  border: 1px solid #2a4a2d;
+  background: #0f1f10;
   color: #e8e8e8;
   font-size: 1rem;
   cursor: pointer;
@@ -175,29 +194,29 @@ body {
 
 /* File upload */
 .file-upload__zone {
-  border: 2px dashed #333;
+  border: 2px dashed #2a4a2d;
   border-radius: 8px;
   padding: 2rem 1.5rem;
   text-align: center;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
-  background: #16161c;
+  background: #0f1f10;
 }
 
 .file-upload__zone:hover,
 .file-upload__zone--drag-over {
-  border-color: #5566cc;
-  background: #1a1a28;
+  border-color: #f86800;
+  background: #0f2a10;
 }
 
 .file-upload__zone:focus {
-  outline: 2px solid #5566cc;
+  outline: 2px solid #f86800;
   outline-offset: 2px;
 }
 
 .file-upload__filename {
   font-weight: 600;
-  color: #7788ee;
+  color: #f07030;
   word-break: break-all;
 }
 
@@ -220,14 +239,14 @@ body {
   font-weight: 700;
   border: none;
   border-radius: 6px;
-  background: #5566cc;
+  background: #f86800;
   color: #fff;
   cursor: pointer;
   transition: background 0.2s, opacity 0.2s;
 }
 
 .apply-button:hover:not(:disabled) {
-  background: #4455bb;
+  background: #d85c00;
 }
 
 .apply-button:disabled {
@@ -256,8 +275,8 @@ body {
 
 /* Instructions checklist */
 .instructions {
-  background: #16161c;
-  border: 1px solid #2a2a35;
+  background: #0f1f10;
+  border: 1px solid #2a4a2d;
   border-radius: 8px;
   padding: 1.25rem 1.5rem;
 }
@@ -295,7 +314,7 @@ body {
 .instructions__checkbox {
   margin-top: 0.15rem;
   flex-shrink: 0;
-  accent-color: #5566cc;
+  accent-color: #f86800;
   width: 1em;
   height: 1em;
   cursor: pointer;
@@ -321,16 +340,16 @@ body {
 }
 
 .instructions__step-body code {
-  background: #1e1e28;
-  border: 1px solid #333;
+  background: #0f1f10;
+  border: 1px solid #2a4a2d;
   border-radius: 3px;
   padding: 0.1em 0.35em;
   font-size: 0.85em;
-  color: #7788ee;
+  color: #f07030;
 }
 
 .instructions__step-body a {
-  color: #7788ee;
+  color: #f07030;
   text-decoration: none;
 }
 
@@ -349,12 +368,12 @@ body {
   font-size: 0.8rem;
   color: #777;
   line-height: 1.5;
-  border-top: 1px solid #2a2a35;
+  border-top: 1px solid #2a4a2d;
   padding-top: 0.85rem;
 }
 
 .instructions__tip a {
-  color: #7788ee;
+  color: #f07030;
   text-decoration: none;
 }
 
@@ -371,4 +390,77 @@ body {
   padding: 0.75rem 1rem;
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* Sponsors */
+.sponsors {
+  background: #0f1f10;
+  border-top: 1px solid #2a4a2d;
+  padding: 2rem 1rem;
+}
+
+.sponsors__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.sponsors__heading {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sponsors__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.sponsors__item {
+  display: flex;
+}
+
+.sponsors__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.sponsors__link:hover {
+  opacity: 1;
+}
+
+.sponsors__logo {
+  height: 48px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: grayscale(30%);
+  transition: filter 0.2s;
+}
+
+.sponsors__link:hover .sponsors__logo {
+  filter: grayscale(0%);
+}
+
+.sponsors__name {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: center;
 }
