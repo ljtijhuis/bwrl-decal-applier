@@ -29,7 +29,7 @@ export function App() {
 
   const autoCompleted = useMemo(() => {
     const s = new Set<number>();
-    if (selectedFile) s.add(1);
+    if (selectedFile) { s.add(0); s.add(1); }
     if (carModelId) s.add(2);
     if (carModelId && (!needsClassDecal || driverClass !== '')) s.add(3);
     if (resultUrl) s.add(4);
