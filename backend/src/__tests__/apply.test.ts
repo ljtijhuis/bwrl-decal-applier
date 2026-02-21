@@ -81,7 +81,7 @@ describe('POST /api/apply', () => {
       })
       .field('carModel', 'ferrari-296-gt3-sprint');
     expect(res.status).toBe(415);
-    expect(res.body.error).toMatch(/png and tga/i);
+    expect(res.body.error).toMatch(/png.*tga.*psd/i);
   });
 
   it('returns 200 PNG for valid Ferrari Sprint with AM class decal', async () => {
@@ -134,6 +134,24 @@ describe('POST /api/apply', () => {
       .field('carModel', 'ferrari-296-gt3-bwec');
     // multer accepts the file (by .tga extension); Sharp can decode a PNG buffer regardless of name
     expect([200, 422]).toContain(res.status);
+  });
+
+  it('accepts a .psd extension file (multer allows it; invalid PSD returns 422, not 415)', async () => {
+    const res = await request(app)
+      .post('/api/apply')
+      .attach('livery', pngBuffer, { filename: 'livery.psd', contentType: 'application/octet-stream' })
+      .field('carModel', 'ferrari-296-gt3-bwec');
+    // multer accepts by .psd extension; PNG buffer has no PSD magic bytes so decodePsd returns null,
+    // Sharp decodes the PNG normally → 200
+    expect(res.status).toBe(200);
+  });
+
+  it('accepts image/vnd.adobe.photoshop MIME type (must not return 415)', async () => {
+    const res = await request(app)
+      .post('/api/apply')
+      .attach('livery', pngBuffer, { filename: 'livery.psd', contentType: 'image/vnd.adobe.photoshop' })
+      .field('carModel', 'ferrari-296-gt3-bwec');
+    expect(res.status).not.toBe(415);
   });
 });
 

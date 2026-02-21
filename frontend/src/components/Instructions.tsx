@@ -13,7 +13,7 @@ const STEPS = [
   },
   {
     title: 'Upload your livery',
-    body: 'Drag-and-drop or click to select your file in the upload area. Both TGA and PNG are supported.',
+    body: 'Drag-and-drop or click to select your file in the upload area. TGA, PNG, and PSD are supported.',
   },
   {
     title: 'Select your car model',

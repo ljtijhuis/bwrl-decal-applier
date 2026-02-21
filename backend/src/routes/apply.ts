@@ -35,8 +35,14 @@ const upload = multer({
   limits: { fileSize: MAX_FILE_SIZE },
   fileFilter(_req, file, cb) {
     const ext = file.originalname.split('.').pop()?.toLowerCase();
-    const validMime = ['image/png', 'image/x-tga', 'image/tga'].includes(file.mimetype);
-    const validExt = ext === 'png' || ext === 'tga';
+    const validMime = [
+      'image/png',
+      'image/x-tga',
+      'image/tga',
+      'image/vnd.adobe.photoshop',
+      'application/photoshop',
+    ].includes(file.mimetype);
+    const validExt = ext === 'png' || ext === 'tga' || ext === 'psd';
     if (validMime || validExt) {
       cb(null, true);
     } else {
@@ -91,7 +97,7 @@ applyRouter.post('/', upload.single('livery'), async (req: Request, res: Respons
   } catch {
     res
       .status(422)
-      .json({ error: 'Could not process the uploaded image. Ensure it is a valid PNG or TGA file.' });
+      .json({ error: 'Could not process the uploaded image. Ensure it is a valid PNG, TGA, or PSD file.' });
   }
 });
 
@@ -110,7 +116,7 @@ export function multerErrorHandler(
     return;
   }
   if (err instanceof Error && err.message === 'INVALID_FILE_TYPE') {
-    res.status(415).json({ error: 'Only PNG and TGA files are accepted.' });
+    res.status(415).json({ error: 'Only PNG, TGA, and PSD files are accepted.' });
     return;
   }
   next(err);

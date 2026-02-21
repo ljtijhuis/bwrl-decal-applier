@@ -17,7 +17,7 @@ The Decal Applier is a monorepo containing a React frontend, a Node.js/Express b
 Browser
   │
   │  POST /api/apply
-  │  multipart/form-data: { livery (PNG|TGA), carModel, driverClass }
+  │  multipart/form-data: { livery (PNG|TGA|PSD), carModel, driverClass }
   │
   ▼
 Express (backend)
@@ -26,7 +26,8 @@ Express (backend)
   ├── validation — file type, file size, known car model
   ├── config lookup — reads decals/config.json to find decal files + placement
   ├── Sharp — composites decal PNG(s) onto livery
-  │           • TGA input is decoded by Sharp before compositing
+  │           • PSD input is flattened by @webtoon/psd before compositing
+  │           • TGA input is decoded to raw RGBA before being passed to Sharp
   │           • all images share the same canvas dimensions
   │           • decals are layered on top (base decals first, class badge last)
   └── response — PNG file streamed back as Content-Disposition: attachment
@@ -40,11 +41,11 @@ Built with Vite, React, and TypeScript.
 
 - **Instructions** — interactive step-by-step checklist at the top of the page; covers the full workflow from finding the base livery TGA through uploading to Trading Paints; checkboxes are session-local state only
 - **Sponsors** — static display-only section rendered below the main tool content; lists league sponsors with logo, name, and external link; sponsor data is a typed `Sponsor[]` array defined directly in `frontend/src/components/Sponsors.tsx` — no API or backend involvement; to add or remove sponsors, edit the `SPONSORS` array in that file
-- **Upload form** — drag-and-drop or file picker; validates type (PNG/TGA) and size (≤ 20 MB) on the client before submission
+- **Upload form** — drag-and-drop or file picker; validates type (PNG/TGA/PSD) and size (≤ 20 MB) on the client before submission
 - **Car model selector** — dropdown grouped by series (`GT3 Sprint`, `BWEC`, `Falken`) using `<optgroup>` elements, populated from `/api/config` at app startup
 - **Driver class selector** — shown only when the selected car model has class-specific decals
 - **Apply button** — POSTs to `/api/apply`, then triggers a browser download of the returned PNG *(Phase 2)*
-- **LiveryPreview** — displays a before/after view: a thumbnail of the uploaded livery (PNG files only; TGA shows a placeholder) and, once compositing completes, the resulting PNG alongside a note on how to upload to Trading Paints *(Phase 4)*
+- **LiveryPreview** — displays a before/after view: a thumbnail of the uploaded livery (PNG files only; TGA and PSD show a placeholder) and, once compositing completes, the resulting PNG alongside a note on how to upload to Trading Paints *(Phase 4)*
 
 ### Backend (`backend/`)
 
@@ -57,7 +58,8 @@ Built with Node.js, Express, and TypeScript.
 | `POST /api/apply` | Accepts livery upload, returns composited PNG *(Phase 2)* |
 
 **Image compositing** uses Sharp:
-- TGA files are decoded to a raw buffer before being passed to Sharp
+- PSD files are flattened by `@webtoon/psd` (all visible layers composited to a single RGBA buffer) before being passed to Sharp
+- TGA files are decoded to raw RGBA before being passed to Sharp
 - Decals are composited in order: base decals first, then the class-specific badge
 - Output is always PNG regardless of input format
 
@@ -128,7 +130,8 @@ Files within each directory are named `{car-name}.png` in kebab-case (e.g. `ferr
 |---------|--------|--------|
 | Frontend framework | React + Vite | Widely known, easy to contribute to |
 | Backend runtime | Node.js + Express | Shares TypeScript toolchain with frontend; large ecosystem |
-| Image compositing | Sharp | Fast, well-maintained; native support for PNG and TGA input |
+| Image compositing | Sharp | Fast, well-maintained; native support for PNG input |
+| PSD flattening | @webtoon/psd | Zero-dependency WebAssembly PSD parser; composites all visible layers to RGBA before Sharp |
 | Monorepo tooling | npm workspaces | Zero extra tooling; works with standard Node |
 | Containerisation | Docker Compose | Reproducible local setup without installing Node globally |
 
@@ -137,7 +140,7 @@ Files within each directory are named `{car-name}.png` in kebab-case (e.g. `ferr
 - **No authentication** — the app is fully anonymous. No user data is stored; the livery file exists only in memory during processing.
 - **No Trading Paints API** — no public API exists. The output is a downloadable PNG the user uploads manually.
 - **Decals in the repo** — keeping assets in version control avoids runtime dependencies on external storage. Adding a new car model is a pull request, not an admin UI action.
-- **PSD input deferred** — PSD flattening (`@webtoon/psd`) is in the backlog; the initial release handles PNG and TGA only.
+- **PSD input supported** — PSD layers are flattened using `@webtoon/psd` before compositing with Sharp. The output is always PNG.
 
 ## Testing strategy
 

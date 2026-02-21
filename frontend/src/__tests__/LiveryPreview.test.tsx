@@ -42,6 +42,15 @@ describe('LiveryPreview', () => {
     expect(mockCreateObjectURL).not.toHaveBeenCalled();
   });
 
+  it('renders a placeholder for a PSD file instead of an image', () => {
+    const psdFile = new File([new Uint8Array(10)], 'livery.psd', { type: 'image/vnd.adobe.photoshop' });
+    render(<LiveryPreview beforeFile={psdFile} resultUrl={null} />);
+
+    expect(screen.getByText('livery.psd')).toBeInTheDocument();
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+    expect(mockCreateObjectURL).not.toHaveBeenCalled();
+  });
+
   it('renders both before and after panels when resultUrl is provided', () => {
     const pngFile = new File([new Uint8Array(10)], 'livery.png', { type: 'image/png' });
     render(<LiveryPreview beforeFile={pngFile} resultUrl="blob:result-url" />);

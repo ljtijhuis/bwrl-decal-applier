@@ -73,6 +73,13 @@ describe('applyDecals', () => {
     await expect(applyDecals(badBuffer, [], DECALS_DIR)).rejects.toThrow();
   });
 
+  it('rejects for a buffer with PSD magic bytes but invalid PSD structure', async () => {
+    // Magic bytes "8BPS" trigger the PSD code path; invalid content causes parse to throw
+    const fakePsd = Buffer.alloc(100);
+    fakePsd[0] = 0x38; fakePsd[1] = 0x42; fakePsd[2] = 0x50; fakePsd[3] = 0x53; // "8BPS"
+    await expect(applyDecals(fakePsd, [], DECALS_DIR)).rejects.toThrow();
+  });
+
   it('rejects when a decal file does not exist', async () => {
     const entries = [{ file: 'nonexistent/decal.png', x: 0, y: 0, width: 10, height: 10 }];
     await expect(applyDecals(liveryBuffer, entries, DECALS_DIR)).rejects.toThrow();

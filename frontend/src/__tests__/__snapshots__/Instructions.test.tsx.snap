@@ -70,7 +70,7 @@ exports[`Instructions > matches snapshot 1`] = `
             <span
               class="instructions__step-body"
             >
-              Drag-and-drop or click to select your file in the upload area. Both TGA and PNG are supported.
+              Drag-and-drop or click to select your file in the upload area. TGA, PNG, and PSD are supported.
             </span>
           </span>
         </label>

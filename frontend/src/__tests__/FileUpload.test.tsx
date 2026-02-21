@@ -16,6 +16,10 @@ const makeOversized = (): File => {
   return new File([new Uint8Array(twentyMbPlusOne)], 'big.png', { type: 'image/png' });
 };
 
+const makePsd = (): File => {
+  return new File([new Uint8Array(100)], 'livery.psd', { type: 'image/vnd.adobe.photoshop' });
+};
+
 const makeInvalidType = (): File => {
   return new File([new Uint8Array(100)], 'livery.jpg', { type: 'image/jpeg' });
 };
@@ -59,6 +63,30 @@ describe('FileUpload', () => {
     expect(onFileChange).toHaveBeenCalledWith(file);
   });
 
+  it('calls onFileChange with a valid PSD file', async () => {
+    const onFileChange = vi.fn();
+    render(<FileUpload selectedFile={null} onFileChange={onFileChange} />);
+
+    const input = screen.getByTestId('file-input');
+    const file = makePsd();
+    await userEvent.upload(input, file);
+
+    expect(onFileChange).toHaveBeenCalledWith(file);
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it('handles drop of a valid PSD file', () => {
+    const onFileChange = vi.fn();
+    render(<FileUpload selectedFile={null} onFileChange={onFileChange} />);
+
+    const zone = screen.getByRole('button');
+    const file = makePsd();
+    fireEvent.drop(zone, { dataTransfer: { files: [file] } });
+
+    expect(onFileChange).toHaveBeenCalledWith(file);
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
   it('shows error and calls onFileChange(null) for oversized file', async () => {
     const onFileChange = vi.fn();
     render(<FileUpload selectedFile={null} onFileChange={onFileChange} />);
@@ -79,7 +107,7 @@ describe('FileUpload', () => {
     fireEvent.change(input, { target: { files: [makeInvalidType()] } });
 
     expect(onFileChange).toHaveBeenCalledWith(null);
-    expect(screen.getByRole('alert')).toHaveTextContent(/png and tga/i);
+    expect(screen.getByRole('alert')).toHaveTextContent(/png.*tga.*psd/i);
   });
 
   it('clears error when a valid file is uploaded after an invalid one', () => {

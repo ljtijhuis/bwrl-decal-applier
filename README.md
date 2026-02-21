@@ -6,7 +6,7 @@ A web app for [Broken Wing Racing League](https://www.brokenwingracingleague.com
 
 League members used to apply decals manually in image editing software. This tool automates that:
 
-1. Upload your livery (PNG or TGA)
+1. Upload your livery (PNG, TGA, or PSD)
 2. Select your car model
 3. Select your driver class (AM, PRO-AM, PRO, ROOKIE) — only shown for series that use class badges
 4. Click **Apply Decals**
@@ -19,7 +19,7 @@ No account required. Your file is processed and returned immediately; nothing is
 A step-by-step checklist is shown at the top of the page for reference. Here is the full flow:
 
 1. **Find your base livery** — your TGA is in `Documents/iRacing/paint/[car folder]`, named `car_[yourCustomerID].tga`. If it isn't there yet, run your paint in Trading Paints once and the Downloader will save it automatically.
-2. **Upload your TGA** — drag-and-drop or click to select the file.
+2. **Upload your livery** — drag-and-drop or click to select a PNG, TGA, or PSD file.
 3. **Select your car model** — choose the car you're racing from the dropdown.
 4. **Select your driver class** — choose AM, Pro-Am, Pro, or Rookie (only shown for cars with class badges).
 5. **Click "Apply Decals"** — the tool downloads the result as a PNG automatically.
@@ -35,6 +35,7 @@ A step-by-step checklist is shown at the top of the page for reference. Here is 
 |-------|--------|
 | PNG   | PNG    |
 | TGA   | PNG    |
+| PSD   | PNG    |
 
 The output PNG is compatible with Trading Paints livery uploads.
 

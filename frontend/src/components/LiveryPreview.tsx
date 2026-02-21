@@ -14,8 +14,8 @@ export function LiveryPreview({ beforeFile, resultUrl }: LiveryPreviewProps) {
       return;
     }
 
-    const isTga = beforeFile.name.toLowerCase().endsWith('.tga');
-    if (isTga) {
+    const ext = beforeFile.name.split('.').pop()?.toUpperCase() ?? '';
+    if (['TGA', 'PSD'].includes(ext)) {
       setBeforeObjectUrl(null);
       return;
     }
@@ -27,11 +27,12 @@ export function LiveryPreview({ beforeFile, resultUrl }: LiveryPreviewProps) {
 
   if (!beforeFile) return null;
 
-  const isTga = beforeFile.name.toLowerCase().endsWith('.tga');
+  const ext = beforeFile.name.split('.').pop()?.toUpperCase() ?? '';
+  const isNonPreviewable = ['TGA', 'PSD'].includes(ext);
 
-  const beforeContent = isTga ? (
+  const beforeContent = isNonPreviewable ? (
     <div className="preview-placeholder">
-      TGA file
+      {ext} file
       <span className="preview-placeholder__name">{beforeFile.name}</span>
     </div>
   ) : beforeObjectUrl ? (

@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from 'react';
 
-const ACCEPTED_TYPES = ['image/png', 'image/x-tga', 'image/tga'];
-const ACCEPTED_EXTENSIONS = ['.png', '.tga'];
+const ACCEPTED_TYPES = ['image/png', 'image/x-tga', 'image/tga', 'image/vnd.adobe.photoshop', 'application/photoshop'];
+const ACCEPTED_EXTENSIONS = ['.png', '.tga', '.psd'];
 const MAX_SIZE_BYTES = 20 * 1024 * 1024; // 20 MB
 
 interface FileUploadProps {
@@ -22,7 +22,7 @@ export function FileUpload({ onFileChange, selectedFile }: FileUploadProps) {
   const handleFile = useCallback(
     (file: File) => {
       if (!isValidType(file)) {
-        setError('Only PNG and TGA files are accepted.');
+        setError('Only PNG, TGA, and PSD files are accepted.');
         onFileChange(null);
         return;
       }
@@ -80,12 +80,12 @@ export function FileUpload({ onFileChange, selectedFile }: FileUploadProps) {
         ) : (
           <p>Drag and drop your livery here, or click to select a file</p>
         )}
-        <p className="file-upload__hint">Accepted formats: PNG, TGA — max 20 MB</p>
+        <p className="file-upload__hint">Accepted formats: PNG, TGA, PSD — max 20 MB</p>
       </div>
       <input
         ref={inputRef}
         type="file"
-        accept=".png,.tga"
+        accept=".png,.tga,.psd"
         onChange={handleInputChange}
         style={{ display: 'none' }}
         data-testid="file-input"

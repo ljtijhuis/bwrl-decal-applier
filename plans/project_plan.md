@@ -7,7 +7,7 @@ League members currently apply decals manually in image editing software before 
 **Key decisions locked in:**
 
 - Stack: React (Vite) frontend + Node.js (Express) backend, Sharp for image compositing
-- Input formats: PNG and TGA (PSD deferred to backlog)
+- Input formats: PNG, TGA, and PSD
 - Auth: None — fully anonymous, no accounts
 - Decal assets: PNG files bundled in the repo, placement rules in a JSON config
 - Decal placement is the same for all decals, the templates used are just different
@@ -129,7 +129,7 @@ League members currently apply decals manually in image editing software before 
 These are out of scope for the initial build but worth noting:
 
 - **iRacing OAuth login**: Let users log in with their iRacing account to pre-fill car model based on their registered vehicles (iRacing Data API has OAuth 2.0)
-- **PSD livery input**: Flatten PSD layers using `@webtoon/psd` before passing to Sharp
+- ~~**PSD livery input**: Flatten PSD layers using `@webtoon/psd` before passing to Sharp~~ *(implemented)*
 - **Admin decal management UI**: Upload/update decal assets through a web UI instead of repo commits
 - **TGA output**: If Trading Paints ever requires TGA instead of PNG for full liveries
 - **Trading Paints direct upload**: Currently no public API exists; revisit if they release one
