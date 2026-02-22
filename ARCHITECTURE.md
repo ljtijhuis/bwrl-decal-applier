@@ -57,6 +57,15 @@ Built with Node.js, Express, and TypeScript.
 | `GET /api/config` | Returns `{ carModels: { [id]: { label, group, hasClassDecals } } }` |
 | `POST /api/apply` | Accepts livery upload, returns composited PNG *(Phase 2)* |
 
+**Rate limiting** (via `express-rate-limit`) is applied in two layers:
+
+| Limiter | Scope | Limit |
+|---------|-------|-------|
+| `globalLimiter` | All routes | 200 requests per 15 minutes per IP |
+| `applyLimiter` | `POST /api/apply` only | 20 requests per 15 minutes per IP |
+
+Both limiters are disabled in `NODE_ENV=test`. Responses over the limit receive HTTP 429 with a JSON `{ error }` body and a `RateLimit` header (RFC draft-7).
+
 **Image compositing** uses Sharp:
 - PSD files are flattened by `@webtoon/psd` (all visible layers composited to a single RGBA buffer) before being passed to Sharp
 - TGA files are decoded to raw RGBA before being passed to Sharp
@@ -132,6 +141,7 @@ Files within each directory are named `{car-name}.png` in kebab-case (e.g. `ferr
 | Backend runtime | Node.js + Express | Shares TypeScript toolchain with frontend; large ecosystem |
 | Image compositing | Sharp | Fast, well-maintained; native support for PNG input |
 | PSD flattening | @webtoon/psd | Zero-dependency WebAssembly PSD parser; composites all visible layers to RGBA before Sharp |
+| Rate limiting | express-rate-limit | Simple in-memory limiter; no external store needed for a single-server setup |
 | Monorepo tooling | npm workspaces | Zero extra tooling; works with standard Node |
 | Containerisation | Docker Compose | Reproducible local setup without installing Node globally |
 
@@ -161,6 +171,8 @@ League website (external repo)          Decal Applier backend (this repo)
 | `PORT` | `3001` | Port the Express server listens on |
 | `NODE_ENV` | — | Set to `production` to suppress development-only output |
 | `ALLOWED_ORIGINS` | `http://localhost:5173` | Comma-separated list of origins permitted by CORS (the league website domain(s)) |
+| `RATE_LIMIT_GLOBAL` | `200` | Max requests per IP per 15 minutes across all routes |
+| `RATE_LIMIT_APPLY` | `20` | Max requests per IP per 15 minutes for `POST /api/apply` |
 
 A template is provided at `backend/.env.example`. Copy it to `backend/.env` and fill in the values before starting.
 

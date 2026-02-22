@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { healthRouter } from './routes/health.js';
 import { configRouter } from './routes/config.js';
 import { applyRouter, multerErrorHandler } from './routes/apply.js';
+import { globalLimiter, applyLimiter } from './middleware/rateLimiter.js';
 
 export const app = express();
 
@@ -12,10 +13,11 @@ app.use(cors({
   origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
 }));
 app.use(express.json());
+app.use(globalLimiter);
 
 app.use('/health', healthRouter);
 app.use('/api/config', configRouter);
-app.use('/api/apply', applyRouter);
+app.use('/api/apply', applyLimiter, applyRouter);
 
 app.use(multerErrorHandler);
 
