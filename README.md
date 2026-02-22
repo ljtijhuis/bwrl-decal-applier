@@ -70,6 +70,22 @@ npm run dev
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for a full development setup guide.
 
+## Running in production
+
+The backend API can be deployed on its own; the frontend lives in the league website's separate codebase.
+
+```bash
+git clone git@github.com:ljtijhuis/bwrl-decal-applier.git
+cd bwrl-decal-applier
+npm install
+cp backend/.env.example backend/.env      # set ALLOWED_ORIGINS to the league website domain
+npm start                                  # builds backend, then serves the API
+```
+
+`npm start` compiles the TypeScript source and starts the server on `PORT` (default 3001). For persistent background execution, wrap with `pm2` or a systemd unit.
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the full deployment topology, environment variable reference, and process manager guidance.
+
 ## Branding
 
 The app uses the Broken Wing Racing League brand identity — forest-green header with orange accents, matching the BWRL badge colours.

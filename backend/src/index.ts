@@ -7,7 +7,10 @@ import { applyRouter, multerErrorHandler } from './routes/apply.js';
 
 export const app = express();
 
-app.use(cors());
+const allowedOrigins = (process.env.ALLOWED_ORIGINS ?? 'http://localhost:5173').split(',');
+app.use(cors({
+  origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
+}));
 app.use(express.json());
 
 app.use('/health', healthRouter);

@@ -142,6 +142,54 @@ Files within each directory are named `{car-name}.png` in kebab-case (e.g. `ferr
 - **Decals in the repo** — keeping assets in version control avoids runtime dependencies on external storage. Adding a new car model is a pull request, not an admin UI action.
 - **PSD input supported** — PSD layers are flattened using `@webtoon/psd` before compositing with Sharp. The output is always PNG.
 
+## Deployment
+
+### Topology
+
+The backend runs as a Node.js process on a Linux server (the league's VPS or similar). The frontend lives in the league website's separate codebase and calls this backend API over HTTPS. There is no Docker requirement in production — the backend is a plain Node.js server.
+
+```
+League website (external repo)          Decal Applier backend (this repo)
+  React / Next.js / static HTML    →    Express on Node.js
+  https://brokenwingracingleague.com     https://api.example.com (or sub-path)
+```
+
+### Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | `3001` | Port the Express server listens on |
+| `NODE_ENV` | — | Set to `production` to suppress development-only output |
+| `ALLOWED_ORIGINS` | `http://localhost:5173` | Comma-separated list of origins permitted by CORS (the league website domain(s)) |
+
+A template is provided at `backend/.env.example`. Copy it to `backend/.env` and fill in the values before starting.
+
+### Deployment commands
+
+```bash
+git clone git@github.com:ljtijhuis/bwrl-decal-applier.git
+cd bwrl-decal-applier
+npm install
+cp backend/.env.example backend/.env      # fill in ALLOWED_ORIGINS
+npm start                                  # builds backend, then runs node dist/index.js
+```
+
+`npm start` at the repo root compiles the TypeScript source to `backend/dist/` and then starts the compiled server. Verify the server is up:
+
+```bash
+curl http://localhost:3001/health
+# → {"status":"ok","timestamp":"..."}
+```
+
+### Persistent background execution
+
+`npm start` runs in the foreground. For a long-running production process, wrap it with a process manager:
+
+- **pm2**: `pm2 start "npm start" --name decal-applier`
+- **systemd**: create a unit file that runs `npm start` in the repo directory with the appropriate `Environment=` entries
+
+Configuring a process manager is out of scope for this repo but is the recommended approach for the league VPS.
+
 ## Testing strategy
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to run tests. The target is **80%+ coverage** across unit, integration, and end-to-end layers:
