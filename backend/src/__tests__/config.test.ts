@@ -38,9 +38,9 @@ describe('GET /api/config', () => {
     }
   });
 
-  it('returns all 34 car models', async () => {
+  it('returns all 35 car models', async () => {
     const res = await request(app).get('/api/config');
-    expect(Object.keys(res.body.carModels)).toHaveLength(34);
+    expect(Object.keys(res.body.carModels)).toHaveLength(35);
   });
 
   it('contains exactly three series groups: GT3 Sprint, BWEC, and Falken', async () => {

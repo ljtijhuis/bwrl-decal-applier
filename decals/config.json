@@ -227,6 +227,13 @@
         "base": [{ "file": "bwec-gtp/acura-arx-06-gtp.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
       }
     },
+	"aston-martin-valkyrie-gtp": {
+	  "label": "Aston Martin Valkyrie GTP",
+	  "group": "BWEC",
+	  "decals": {
+	    "base": [{ "file": "bwec-gtp/aston-martin-valkyrie-gtp.png", "x": 0, "y": 0, "width": 2048, "height": 2048 }]
+	  }
+	},
     "bmw-m-hybrid-v8-gtp": {
       "label": "BMW M Hybrid V8 GTP",
       "group": "BWEC",
